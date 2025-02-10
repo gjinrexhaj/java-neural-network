@@ -11,6 +11,9 @@ TODO: add screenshot of working application
 This project was created with IntelliJ IDEA, but any IDE (or text editor + environment) that supports Java and 
 Maven should suffice.
 
+This project's specified Java version is 23, but most (if not all) of its code is likely backwards-compatible
+with earlier versions.
+
 TODO: add info about external libraries added through Maven
 
 ### Cloning
