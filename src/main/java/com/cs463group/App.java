@@ -1,7 +1,7 @@
 package com.cs463group;
 
 /**
- * Hello world!
+ * Test webhook
  *
  */
 public class App {
