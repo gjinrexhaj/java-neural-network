@@ -11,6 +11,8 @@ TODO: add screenshot of working application
 This project was created with IntelliJ IDEA, but any IDE (or text editor + environment) that supports Java and 
 Maven should suffice.
 
+TODO: add info about external libraries added through Maven
+
 ### Cloning
 You can clone this repository by opening a terminal, navigating to your desired project directory, and typing:
 ```
