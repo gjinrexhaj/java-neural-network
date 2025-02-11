@@ -8,11 +8,22 @@
   <packaging>jar</packaging>
 
   <name>java-neural-network</name>
-  <url>http://maven.apache.org</url>
+  <url>https://github.com/gjinrexhaj/java-neural-network</url>
 
   <properties>
+    <maven.compiler.source>23</maven.compiler.source>
+    <maven.compiler.target>23</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+
+
+  <build>
+    <plugins>
+
+
+    </plugins>
+  </build>
+
 
   <dependencies>
     <dependency>
