@@ -24,9 +24,7 @@ public class Logger {
     public File file;
     public FileWriter writer;
 
-
     // Define all possible log types
-
     public enum LogLevel {
         DEBUG,
         INFO,
@@ -47,12 +45,20 @@ public class Logger {
         try {
             // write timestamp before message
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-            String logMessage = "[" + LocalDateTime.now().format(formatter) + "] " +
-                    levelToString(level) + ": " + entry + "\n";
+            String color = "";
+
+            // change color depending on log level
+            switch (level) {
+                case LogLevel.ERROR -> color = "\u001B[31m";
+                case LogLevel.WARNING -> color = "\u001B[33m";
+                default -> color = "\u001B[0m";
+            }
 
             // write to logfile, print log in console
+            String logMessage = "[" + LocalDateTime.now().format(formatter) + "] " +
+                    levelToString(level) + ": " + entry + "\n";
             writer.write(logMessage);
-            System.out.print(logMessage);
+            System.out.print(color + logMessage);
 
         } catch (IOException e) {
             System.out.println("log() failed!");
@@ -60,7 +66,7 @@ public class Logger {
         }
     }
 
-    // close logger when done
+    // Close logger when executed
     public void closeLogger() {
         try {
             writer.close();
@@ -70,7 +76,7 @@ public class Logger {
         }
     }
 
-    // append log type to log
+    // Append log type to log, take input from enum and return appropriate string
     private String levelToString(LogLevel level)
     {
         switch (level) {
@@ -86,7 +92,6 @@ public class Logger {
                 return "UNKNOWN";
         }
     }
-
 
     // Called by constructor, creates a new file in working directory if one doesn't already exist
     private void createFile() {
@@ -105,6 +110,7 @@ public class Logger {
         }
     }
 
+    // Called by constructor, create file's associated file writer
     private void createFileWriter() {
         try {
             writer = new FileWriter(file);
@@ -113,5 +119,4 @@ public class Logger {
             e.printStackTrace();
         }
     }
-
 }
