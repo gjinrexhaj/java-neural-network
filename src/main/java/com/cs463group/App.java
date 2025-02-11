@@ -1,14 +1,16 @@
 package com.cs463group;
 
 /**
- * Test webhook 3
- *
+ *  App.java
+ *  Created on 2/10/2025
+ *  Launching point of the program.
  */
+
 public class App {
 
     public static void main(String[] args) {
-
-        System.out.println( "main method launched!" );
-
+        Logger logger = new Logger();
+        logger.log(Logger.LogLevel.INFO, "Main Method Launched!");
+        logger.closeLogger();
     }
 }
