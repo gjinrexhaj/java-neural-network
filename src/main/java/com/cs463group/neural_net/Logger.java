@@ -1,4 +1,4 @@
-package com.cs463group;
+package com.cs463group.neural_net;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -59,6 +59,7 @@ public class Logger {
                     levelToString(level) + ": " + entry + "\n";
             writer.write(logMessage);
             System.out.print(color + logMessage);
+
 
         } catch (IOException e) {
             System.out.println("log() failed!");
