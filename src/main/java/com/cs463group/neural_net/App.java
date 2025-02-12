@@ -1,6 +1,5 @@
 package com.cs463group.neural_net;
 
-import java.util.Arrays;
 
 /**
  *  App.java
