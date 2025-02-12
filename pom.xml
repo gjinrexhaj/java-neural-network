@@ -18,14 +18,21 @@
 
 
   <build>
+    <finalName>${project.artifactId}</finalName>
     <plugins>
-
-
     </plugins>
   </build>
 
 
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/com.formdev/flatlaf -->
+    <dependency>
+      <groupId>com.formdev</groupId>
+      <artifactId>flatlaf</artifactId>
+      <version>3.5.4</version>
+    </dependency>
+
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
