@@ -23,6 +23,15 @@ public class View extends JFrame {
     private JRadioButton mutationRadioButton;
     private JRadioButton gradientDescentRadioButton;
     private JPanel attributesPanel;
+    private JSpinner spinner1;
+    private JSpinner spinner2;
+    private JSpinner spinner3;
+    private JSpinner spinner4;
+    private JButton TRAINButton;
+    private JButton RUNButton;
+    private JButton analysisButton;
+    private JButton saveButton;
+    private JButton aboutButton;
 
     // Create logger instance
     static Logger logger = new Logger();
