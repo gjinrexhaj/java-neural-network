@@ -3,23 +3,37 @@ package com.cs463group.swing_gui;
 import com.cs463group.neural_net.Logger;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
+
+
 public class View extends JFrame {
+
+
 
     // Define application GUI components
     private JPanel mainPanel;
-    private JSplitPane splitplane1;
-    private JScrollPane consoleScrollPane;
-    private JTabbedPane tabbedPane;
+    private JSplitPane splitplane;
+    private JTabbedPane viewsPanel;
+    private JPanel trainingMethodPanel;
+    private JRadioButton mutationRadioButton;
+    private JRadioButton gradientDescentRadioButton;
+    private JPanel attributesPanel;
 
     // Create logger instance
     static Logger logger = new Logger();
 
     // Create and initialize application
     public static void main(String[] args) {
+
+        // set custom theming
+        FlatMacLightLaf.setup();
+        Font newFont = new Font("Arial", Font.PLAIN, 14);
+        UIManager.put("defaultFont", newFont);
 
         // set attributes
         JFrame frame = new JFrame("Neural Network GUI Frontend");
@@ -54,8 +68,4 @@ public class View extends JFrame {
         logger.log(Logger.LogLevel.DEBUG, "Application initialized.");
 
     }
-
-
-
-
 }
