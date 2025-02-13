@@ -20,9 +20,10 @@ import java.time.format.DateTimeFormatter;
 
 public class Logger {
 
-    // member variables, each logger has an associated File and FileWriter object
-    public File file;
-    public FileWriter writer;
+    // member variables
+    public static File file;
+    public static FileWriter writer;
+    public static boolean fileIsCreated;
 
     // Define all possible log types
     public enum LogLevel {
@@ -32,20 +33,20 @@ public class Logger {
         ERROR
     }
 
-    // Constructor, create and open a .txt file to write logs to
-    public Logger() {
-        createFile();
-        createFileWriter();
-    }
-
     // Log method, accepts an entry parameter (message to be logged) and a type parameter
     // specifying the messages designation in accordance with the LogLevel enum
-    public void log(LogLevel level, String entry) {
+    public static void log(LogLevel level, String entry, boolean showTimeStamp) {
+        if(!fileIsCreated) {
+            createFile();
+            createFileWriter();
+            fileIsCreated = true;
+        }
 
         try {
             // write timestamp before message
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-            String color = "";
+            String color;
+            String logMessage;
 
             // change color depending on log level
             switch (level) {
@@ -54,9 +55,14 @@ public class Logger {
                 default -> color = "\u001B[0m";
             }
 
-            // write to logfile, print log in console
-            String logMessage = "[" + LocalDateTime.now().format(formatter) + "] " +
-                    levelToString(level) + ": " + entry + "\n";
+            // write to logfile, print log in console, toggle timestamp
+            if (showTimeStamp) {
+                 logMessage = "[" + LocalDateTime.now().format(formatter) + "] " +
+                        levelToString(level) + ": " + entry + "\n";
+            } else {
+                logMessage = entry + "\n";
+            }
+
             writer.write(logMessage);
             System.out.print(color + logMessage);
 
@@ -68,7 +74,7 @@ public class Logger {
     }
 
     // Close logger when executed
-    public void closeLogger() {
+    public static void closeLogger() {
         try {
             writer.close();
         } catch (IOException e) {
@@ -78,7 +84,7 @@ public class Logger {
     }
 
     // Append log type to log, take input from enum and return appropriate string
-    private String levelToString(LogLevel level)
+    private static String levelToString(LogLevel level)
     {
         switch (level) {
             case DEBUG:
@@ -95,7 +101,7 @@ public class Logger {
     }
 
     // Called by constructor, creates a new file in working directory if one doesn't already exist
-    private void createFile() {
+    private static void createFile() {
         try {
             file = new File("log_file.txt");
             if (file.createNewFile()) {
@@ -112,7 +118,7 @@ public class Logger {
     }
 
     // Called by constructor, create file's associated file writer
-    private void createFileWriter() {
+    private static void createFileWriter() {
         try {
             writer = new FileWriter(file);
         } catch (IOException e) {
