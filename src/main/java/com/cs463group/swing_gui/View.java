@@ -11,9 +11,12 @@ import java.awt.event.WindowListener;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
 
+/**
+ *  View.java
+ *  Created on 2/12/2025
+ *  Contains all frontend GUI code for neural network visualizer
+ */
 public class View extends JFrame {
-
-
 
     // Define application GUI components
     private JPanel mainPanel;
@@ -32,6 +35,8 @@ public class View extends JFrame {
     private JButton analysisButton;
     private JButton saveButton;
     private JButton aboutButton;
+    private JProgressBar progressBar1;
+    private JSpinner spinner5;
 
     // Create logger instance
     static Logger logger = new Logger();
@@ -60,8 +65,8 @@ public class View extends JFrame {
                         "Exit Confirmation", JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if (confirm == 0) {
-                    logger.log(Logger.LogLevel.DEBUG, "Application closed by user.");
-                    logger.closeLogger();
+                    Logger.log(Logger.LogLevel.DEBUG, "Application closed by user.", true);
+                    Logger.closeLogger();
                     System.exit(0);
                 } else {
                     frame.setEnabled(true);
@@ -74,7 +79,7 @@ public class View extends JFrame {
         // center window
         frame.setLocationRelativeTo(null);
 
-        logger.log(Logger.LogLevel.DEBUG, "Application initialized.");
+        Logger.log(Logger.LogLevel.DEBUG, "Application initialized.", true);
 
     }
 }
