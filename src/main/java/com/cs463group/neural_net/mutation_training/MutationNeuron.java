@@ -1,4 +1,6 @@
-package com.cs463group.neural_net;
+package com.cs463group.neural_net.mutation_training;
+
+import com.cs463group.neural_net.utils.Functions;
 
 import java.util.Random;
 
@@ -9,9 +11,9 @@ import java.util.Random;
  *  of the neuron is initialized with some random double between -1 and 1.
  *  Contains mutate, remember, and forget functions and stores old weights and biases.
  */
-public class Neuron {
+public class MutationNeuron {
 
-    // randomize initial bias and weights
+    // randomize initial bias and weights - used in mutation training
     Random random = new Random();
     private Double oldBias = random.nextDouble(-1, 1), bias = random.nextDouble(-1, 1);
     private Double oldWeight1 = random.nextDouble(-1, 1), weight1 = random.nextDouble(-1, 1);
@@ -34,6 +36,7 @@ public class Neuron {
         }
     }
 
+
     // Forget method
     public void forget() {
         bias = oldBias;
@@ -51,7 +54,7 @@ public class Neuron {
     // compute preactivation, return it's sigmoid function output
     public double compute(double param1, double param2) {
         double preActivation = (this.weight1 * param1) + (this.weight2 * param2) + this.bias;
-        double output = Utilities.sigmoid(preActivation);
+        double output = Functions.sigmoid(preActivation);
         return output;
     }
 }

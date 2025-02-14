@@ -1,6 +1,6 @@
 package com.cs463group.swing_gui;
 
-import com.cs463group.neural_net.Logger;
+import com.cs463group.neural_net.utils.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +16,9 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
  *  Created on 2/12/2025
  *  Contains all frontend GUI code for neural network visualizer
  */
+
+// TODO: get rid of line 57 post-"maven build" bug
+
 public class View extends JFrame {
 
     // Define application GUI components
@@ -65,7 +68,7 @@ public class View extends JFrame {
                         "Exit Confirmation", JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if (confirm == 0) {
-                    Logger.log(Logger.LogLevel.DEBUG, "Application closed by user.", true);
+                    Logger.log(Logger.LogLevel.INFO, "Application closed by user.", true);
                     Logger.closeLogger();
                     System.exit(0);
                 } else {
@@ -79,7 +82,7 @@ public class View extends JFrame {
         // center window
         frame.setLocationRelativeTo(null);
 
-        Logger.log(Logger.LogLevel.DEBUG, "Application initialized.", true);
+        Logger.log(Logger.LogLevel.INFO, "GUI application initialized.", true);
 
     }
 }

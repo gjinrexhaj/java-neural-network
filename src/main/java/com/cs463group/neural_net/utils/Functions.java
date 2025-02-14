@@ -1,4 +1,4 @@
-package com.cs463group.neural_net;
+package com.cs463group.neural_net.utils;
 
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
  *  Created on 2/11/2025
  *  Contains commonly used helper functions to be used in other classes
  */
-public class Utilities {
+public class Functions {
 
     // Sigmoid activation function
     public static double sigmoid(double input) {
@@ -17,8 +17,8 @@ public class Utilities {
 
     // Derivative of sigmoid activation function
     public static double sigmoidDeriv(double in){
-        double sigmoid = Utilities.sigmoid(in);
-        return sigmoid * (1 - in);
+        double sigmoid = Functions.sigmoid(in);
+        return sigmoid * (1 - sigmoid);
     }
 
     // Mean square loss function
