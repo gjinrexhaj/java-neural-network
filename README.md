@@ -29,7 +29,7 @@ If you're unable to work with this, you can change the ```maven.compiler.source`
 attributes in the ```pom.xml``` file to suit your needs (provided the source code is backwards compatible with your
 selection).
 
-As of right now, no external plugins or dependencies are being used in this project.
+Currently, this project only uses one dependency: FlatLaf for styling the Swing GUI.
 
 To build this program successfully, simply launch ```pom.xml``` with the arguments:
 ```
