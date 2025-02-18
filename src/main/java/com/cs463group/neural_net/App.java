@@ -47,11 +47,11 @@ public class App {
         mutationTestEpoch1000.train(data, answers);
 
         // create and differentiation train networks with 500 and 1000 epochs respectively
-        DifferentialNetwork diffTestEpoch500 = new DifferentialNetwork(500, 0.15);
-        DifferentialNetwork diffTestEpoch1000 = new DifferentialNetwork(1000, 0.15);
+        //DifferentialNetwork diffTestEpoch500 = new DifferentialNetwork(500, 0.15);
+        //DifferentialNetwork diffTestEpoch1000 = new DifferentialNetwork(1000, 0.15);
 
-        diffTestEpoch500.train(data, answers);
-        diffTestEpoch1000.train(data, answers);
+        //diffTestEpoch500.train(data, answers);
+        //diffTestEpoch1000.train(data, answers);
 
 
 
@@ -63,13 +63,15 @@ public class App {
         System.out.println(String.format("  male, 143, 67: network500learn1: %.10f | network1000learn1: %.10f", mutationTestEpoch500.predict(143.0, 67.0), mutationTestEpoch1000.predict(120.0, 72.0)));
         System.out.println(String.format("  male, 130, 66: network500learn1: %.10f | network1000learn1: %.10f", mutationTestEpoch500.predict(130.0, 66.0), mutationTestEpoch1000.predict(130.0, 66.0)));
 
+
+        /*
         System.out.println("------------DIFFERENTIATION TRAINING RESULTS-------------");
         System.out.println(String.format("  male, 167, 73: network500learn1: %.10f | network1000learn1: %.10f", diffTestEpoch500.predict(167.0, 73.0), diffTestEpoch1000.predict(167.0, 73.0)));
         System.out.println(String.format("female, 105, 67: network500learn1: %.10f | network1000learn1: %.10f", diffTestEpoch500.predict(105.0, 67.0), diffTestEpoch1000.predict(105.0, 67.0)));
         System.out.println(String.format("female, 120, 72: network500learn1: %.10f | network1000learn1: %.10f", diffTestEpoch500.predict(120.0, 72.0), diffTestEpoch1000.predict(120.0, 72.0)));
         System.out.println(String.format("  male, 143, 67: network500learn1: %.10f | network1000learn1: %.10f", diffTestEpoch500.predict(143.0, 67.0), diffTestEpoch1000.predict(120.0, 72.0)));
         System.out.println(String.format("  male, 130, 66: network500learn1: %.10f | network1000learn1: %.10f", diffTestEpoch500.predict(130.0, 66.0), diffTestEpoch1000.predict(130.0, 66.0)));
-
+         */
 
         Logger.closeLogger();
     }

@@ -34,7 +34,7 @@ public class View extends JFrame {
     private JSpinner spinner3;
     private JSpinner spinner4;
     private JButton TRAINButton;
-    private JButton RUNButton;
+    private JButton PREDICTButton;
     private JButton analysisButton;
     private JButton saveButton;
     private JButton aboutButton;

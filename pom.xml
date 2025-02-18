@@ -20,6 +20,20 @@
   <build>
     <finalName>${project.artifactId}</finalName>
     <plugins>
+      <plugin>
+        <!-- Build executable JAR -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.4.1</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <classpathPrefix>lib</classpathPrefix>
+              <mainClass>com.cs463group.neural_net.App</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
