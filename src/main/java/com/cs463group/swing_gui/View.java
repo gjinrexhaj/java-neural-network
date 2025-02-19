@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.PrintStream;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
@@ -18,6 +19,7 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
  */
 
 // TODO: get rid of line 57 post-"maven build" bug
+// TODO: implement console view
 
 public class View extends JFrame {
 
@@ -40,6 +42,9 @@ public class View extends JFrame {
     private JButton aboutButton;
     private JProgressBar progressBar1;
     private JSpinner spinner5;
+    private JTextArea consoleTextArea;
+
+
 
     // Create logger instance
     static Logger logger = new Logger();
@@ -68,7 +73,7 @@ public class View extends JFrame {
                         "Exit Confirmation", JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if (confirm == 0) {
-                    Logger.log(Logger.LogLevel.INFO, "Application closed by user.", true);
+                    Logger.log(Logger.LogLevel.INFO, "Application closed by user.", true, true);
                     Logger.closeLogger();
                     System.exit(0);
                 } else {
@@ -82,7 +87,27 @@ public class View extends JFrame {
         // center window
         frame.setLocationRelativeTo(null);
 
-        Logger.log(Logger.LogLevel.INFO, "GUI application initialized.", true);
 
+        // TEST CONSOLE VIEW
+        for(int i = 0; i < 99; i++) {
+
+            Logger.log(Logger.LogLevel.INFO, "test " + i, true, false);
+        }
+
+
+        Logger.log(Logger.LogLevel.INFO, "GUI application initialized.", true, false);
+
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        // Populate the console view tab
+        consoleTextArea = new JTextArea();
+        ConsoleOutputStream console = new ConsoleOutputStream(consoleTextArea);
+        System.setOut(new PrintStream(console));
+
+
+
+        // Populate
     }
 }
