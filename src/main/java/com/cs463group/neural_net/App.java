@@ -24,7 +24,7 @@ public class App {
 
         List<List<Double>> data = new ArrayList<List<Double>>();
 
-        Logger.log(Logger.LogLevel.INFO, "CLI application has been launched", true);
+        Logger.log(Logger.LogLevel.INFO, "CLI application has been launched", true, true);
 
 
         // TODO: figure out why gradient descent training doesn't work with this particular data

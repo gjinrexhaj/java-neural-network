@@ -21,14 +21,14 @@ public class MutationNetwork {
     // Constructor
     public MutationNetwork(int epochs){
         this.epochs = epochs;
-        Logger.log(Logger.LogLevel.INFO, "Mutation neural network with " + epochs + " epochs has been successfuly created.", true);
+        Logger.log(Logger.LogLevel.INFO, "Mutation neural network with " + epochs + " epochs has been successfuly created.", true, true);
     }
 
     // Constructor
     public MutationNetwork(int epochs, Double learnFactor) {
         this.epochs = epochs;
         this.learnFactor = learnFactor;
-        Logger.log(Logger.LogLevel.INFO, "Mutation neural network with " + epochs + " epochs and learnFactor: " + learnFactor + " has been successfuly created.", true);
+        Logger.log(Logger.LogLevel.INFO, "Mutation neural network with " + epochs + " epochs and learnFactor: " + learnFactor + " has been successfuly created.", true, true);
 
     }
 
@@ -41,7 +41,7 @@ public class MutationNetwork {
 
     // Training via mutation
     public void train(List<List<Double>> data, List<Double> answers) {
-        Logger.log(Logger.LogLevel.INFO, "Mutation training has begun with " + epochs + " specified training cycles.", true);
+        Logger.log(Logger.LogLevel.INFO, "Mutation training has begun with " + epochs + " specified training cycles.", true, true);
         Double bestEpochLoss = null;
         for (int epoch = 0; epoch < epochs; epoch++) {
             // adapt neuron
@@ -55,7 +55,7 @@ public class MutationNetwork {
             Double thisEpochLoss = Functions.meanSquareLoss(answers, predictions);
 
             // LOGGING THE TRAINER
-            if (epoch % 10 == 0) Logger.log(Logger.LogLevel.INFO, String.format("Epoch: %s | bestEpochLoss: %.15f | thisEpochLoss: %.15f", epoch, bestEpochLoss, thisEpochLoss), false);
+            if (epoch % 10 == 0) Logger.log(Logger.LogLevel.INFO, String.format("Epoch: %s | bestEpochLoss: %.15f | thisEpochLoss: %.15f", epoch, bestEpochLoss, thisEpochLoss), false, true);
 
             if (bestEpochLoss == null) {
                 bestEpochLoss = thisEpochLoss;
@@ -69,7 +69,7 @@ public class MutationNetwork {
                 }
             }
         }
-        Logger.log(Logger.LogLevel.INFO, "Mutation network training has finished.", true);
+        Logger.log(Logger.LogLevel.INFO, "Mutation network training has finished.", true, true);
     }
 
 

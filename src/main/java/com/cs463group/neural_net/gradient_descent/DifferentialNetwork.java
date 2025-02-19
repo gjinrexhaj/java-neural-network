@@ -16,7 +16,7 @@ public class DifferentialNetwork {
     public DifferentialNetwork(int numEpochs, double rateOfLearn) {
         epochs = numEpochs;
         learnRate = rateOfLearn;
-        Logger.log(Logger.LogLevel.INFO, "Differential neural network with " + epochs + " epochs and learnRate: " + learnRate + " has been successfuly created.", true);
+        Logger.log(Logger.LogLevel.INFO, "Differential neural network with " + epochs + " epochs and learnRate: " + learnRate + " has been successfuly created.", true, true);
     }
 
     // TODO: programmatically specify number of neurons
@@ -33,7 +33,7 @@ public class DifferentialNetwork {
 
     // differentiation training
     public void train(List<List<Double>> data, List<Double> answers) {
-        Logger.log(Logger.LogLevel.INFO, "Differential training has begun with " + epochs + " specified training cycles.", true);
+        Logger.log(Logger.LogLevel.INFO, "Differential training has begun with " + epochs + " specified training cycles.", true, true);
         for (int epoch = 0; epoch < epochs; epoch++) {
 
             for (int i = 0; i < data.size(); i++) {
@@ -47,10 +47,10 @@ public class DifferentialNetwork {
             if (epoch % 10 == 0) {
                 List<Double> predictions = data.stream().map( item -> this.predict(item.get(0), item.get(1)) ).collect( Collectors.toList() );
                 Double loss = Functions.meanSquareLoss(answers, predictions);
-                Logger.log(Logger.LogLevel.INFO, "Epoch " + epoch + "    Pred: " + predictions + "     Loss: "+ loss, false);
+                Logger.log(Logger.LogLevel.INFO, "Epoch " + epoch + "    Pred: " + predictions + "     Loss: "+ loss, false, true);
             }
         }
-        Logger.log(Logger.LogLevel.INFO, "Differential network training has finished.", true);
+        Logger.log(Logger.LogLevel.INFO, "Differential network training has finished.", true, true);
     }
 
     // recursive adjustment method used in differentiation training
