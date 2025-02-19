@@ -35,7 +35,7 @@ public class Logger {
 
     // Log method, accepts an entry parameter (message to be logged) and a type parameter
     // specifying the messages designation in accordance with the LogLevel enum
-    public static void log(LogLevel level, String entry, boolean showTimeStamp) {
+    public static void log(LogLevel level, String entry, boolean showTimeStamp, boolean showColor) {
         if(!fileIsCreated) {
             createFile();
             createFileWriter();
@@ -49,10 +49,14 @@ public class Logger {
             String logMessage;
 
             // change color depending on log level
-            switch (level) {
-                case LogLevel.ERROR -> color = "\u001B[31m";
-                case LogLevel.WARNING -> color = "\u001B[33m";
-                default -> color = "\u001B[0m";
+            if(showColor) {
+                switch (level) {
+                    case LogLevel.ERROR -> color = "\u001B[31m";
+                    case LogLevel.WARNING -> color = "\u001B[33m";
+                    default -> color = "\u001B[0m";
+                }
+            } else {
+                color = "";
             }
 
             // write to logfile, print log in console, toggle timestamp
