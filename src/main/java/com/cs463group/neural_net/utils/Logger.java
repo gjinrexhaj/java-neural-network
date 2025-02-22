@@ -109,10 +109,9 @@ public class Logger {
         try {
             file = new File("log_file.txt");
             if (file.createNewFile()) {
-                System.out.print(file.getName() + " successfully created in ");
-                System.out.println(System.getProperty("user.dir"));
+                System.out.println(file.getName() + " successfully created in " + System.getProperty("user.dir"));
             } else {
-                System.out.println("Log file already exists.");
+                System.out.println(file.getName() + " already exists. File has been cleared and is now being written to");
             }
 
         } catch (IOException e) {
