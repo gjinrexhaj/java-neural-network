@@ -45,6 +45,7 @@ public class View extends JFrame {
     private JTextArea consoleTextArea;
     private JButton CREATEButton;
     private JTree fileTree;
+    private JTextField textField1;
 
 
     // Create logger instance
