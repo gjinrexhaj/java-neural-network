@@ -43,7 +43,8 @@ public class View extends JFrame {
     private JProgressBar progressBar1;
     private JSpinner spinner5;
     private JTextArea consoleTextArea;
-
+    private JButton CREATEButton;
+    private JTree fileTree;
 
 
     // Create logger instance
@@ -59,6 +60,8 @@ public class View extends JFrame {
 
         // set attributes
         JFrame frame = new JFrame("Neural Network GUI Frontend");
+
+
         frame.setContentPane(new View().mainPanel);
         frame.pack();
         frame.setSize(1280,720);
@@ -87,16 +90,8 @@ public class View extends JFrame {
         // center window
         frame.setLocationRelativeTo(null);
 
-
-        // TEST CONSOLE VIEW
-        for(int i = 0; i < 99; i++) {
-
-            Logger.log(Logger.LogLevel.INFO, "test " + i, true, false);
-        }
-
-
-        Logger.log(Logger.LogLevel.INFO, "GUI application initialized.", true, false);
-
+        // add working dir string to bottom of data view
+        Logger.log(Logger.LogLevel.INFO, "GUI application fully initialized.", true, false);
     }
 
     private void createUIComponents() {
@@ -106,8 +101,8 @@ public class View extends JFrame {
         ConsoleOutputStream console = new ConsoleOutputStream(consoleTextArea);
         System.setOut(new PrintStream(console));
 
-
-
+        // Create file chooser gui for training data
+        fileTree = new FileTree(System.getProperty("user.dir"));
         // Populate
     }
 }
