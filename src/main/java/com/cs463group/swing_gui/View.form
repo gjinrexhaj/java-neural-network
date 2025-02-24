@@ -29,7 +29,7 @@
               <splitpane position="left"/>
             </constraints>
             <properties/>
-            <border type="line" title="View" title-position="1"/>
+            <border type="line" title="View Panel" title-position="1"/>
             <children>
               <grid id="742e3" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
@@ -48,7 +48,17 @@
                       <toolTipText value=""/>
                     </properties>
                     <border type="none" title="Network graph"/>
-                    <children/>
+                    <children>
+                      <grid id="3213a" binding="NeuralNetworkVisualizerPanel" custom-create="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children/>
+                      </grid>
+                    </children>
                   </grid>
                   <grid id="a7bec" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
@@ -69,7 +79,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <grid id="ec2c1" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="ec2c1" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -79,7 +89,7 @@
                     <children>
                       <component id="37443" class="javax.swing.JTree" binding="fileTree" custom-create="true">
                         <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
                             <preferred-size width="150" height="50"/>
                           </grid>
                         </constraints>
@@ -90,16 +100,64 @@
                           <JTree.lineStyle class="java.lang.String" value=""/>
                         </clientProperties>
                       </component>
+                      <grid id="d46c1" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="c3e98" class="javax.swing.JButton" binding="loadDataButton" default-binding="true">
+                            <constraints>
+                              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <background color="-13273872"/>
+                              <foreground color="-1"/>
+                              <text value="Load Data"/>
+                            </properties>
+                          </component>
+                          <component id="1c1" class="javax.swing.JButton" binding="unloadDataButton" default-binding="true">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Unload Data"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </grid>
+                      <component id="a5193" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Supported file type(s): .txt"/>
+                        </properties>
+                      </component>
                     </children>
                   </grid>
                   <grid id="4de3" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                     <border type="none" title="Loaded data"/>
-                    <children/>
+                    <children>
+                      <component id="9327e" class="javax.swing.JTextPane" binding="EXAMPLEWHATYOURDATATextPane" default-binding="true">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                            <preferred-size width="150" height="50"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <font name="Source Code Pro"/>
+                          <text value="EXAMPLE - WHAT YOUR DATA SHOULD LOOK LIKE (for 2 inputs in this case):&#10;&#10;INPUT 1        INPUT 2        ANSWER&#10;Weight (kg), Height (cm), Gender (0-male, 1-female)&#10;&#10;-----------------example data begin-----------------&#10;66, 172, 0&#10;76, 182, 0&#10;57, 176, 1&#10;etc 1&#10;etc 2&#10;etc ...&#10;etc n&#10;------------------example data end------------------&#10;&#10;LOAD DATA BY SELECTING A .txt FILE VIA FILE TREE&#10;ON THE LEFT, AND CLICKING &quot;Load Data&quot;&#10;"/>
+                        </properties>
+                      </component>
+                    </children>
                   </grid>
                 </children>
               </grid>
@@ -119,7 +177,7 @@
                     <properties/>
                     <border type="none" title="Input"/>
                     <children>
-                      <component id="b8b74" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+                      <component id="b8b74" class="javax.swing.JTextField" binding="predictionInputTextField">
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="2" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <preferred-size width="150" height="-1"/>
@@ -174,7 +232,7 @@
                     <properties/>
                     <border type="none" title="Output"/>
                     <children>
-                      <component id="e21cb" class="javax.swing.JLabel">
+                      <component id="e21cb" class="javax.swing.JLabel" binding="predictionOutputLabel">
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -184,7 +242,7 @@
                           <text value="Prediction Value: &lt;tbd&gt;"/>
                         </properties>
                       </component>
-                      <component id="788a8" class="javax.swing.JLabel">
+                      <component id="788a8" class="javax.swing.JLabel" binding="predictionConfidenceLabel">
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -225,6 +283,7 @@
                       <component id="7e818" class="javax.swing.JTextArea" binding="consoleTextArea" custom-create="true">
                         <constraints/>
                         <properties>
+                          <background color="-526086"/>
                           <editable value="false"/>
                           <enabled value="true"/>
                           <font name="Source Code Pro" size="14" style="0"/>
@@ -284,7 +343,7 @@
                 <properties/>
                 <border type="none" title="Network attributes"/>
                 <children>
-                  <component id="92d0c" class="javax.swing.JSpinner" binding="spinner1" default-binding="true">
+                  <component id="92d0c" class="javax.swing.JSpinner" binding="spinner_inputNodes">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -295,21 +354,15 @@
                       <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </vspacer>
-                  <component id="6da31" class="javax.swing.JSpinner" binding="spinner2" default-binding="true">
+                  <component id="6da31" class="javax.swing.JSpinner" binding="spinner_hiddenNodes">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="a9786" class="javax.swing.JSpinner" binding="spinner3" default-binding="true">
+                  <component id="2f9b9" class="javax.swing.JSpinner" binding="spinner_outputNodes">
                     <constraints>
                       <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties/>
-                  </component>
-                  <component id="2f9b9" class="javax.swing.JSpinner" binding="spinner4" default-binding="true">
-                    <constraints>
-                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                   </component>
@@ -329,34 +382,46 @@
                       <text value="Hidden nodes"/>
                     </properties>
                   </component>
-                  <component id="2b467" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Layers of hidden nodes"/>
-                    </properties>
-                  </component>
                   <component id="34c33" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Output nodes"/>
                     </properties>
                   </component>
-                  <component id="31af0" class="javax.swing.JSpinner" binding="spinner5" default-binding="true">
+                  <component id="31af0" class="javax.swing.JSpinner" binding="spinner_trainingCycles">
                     <constraints>
-                      <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                   </component>
                   <component id="b7a49" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Training cycles"/>
+                    </properties>
+                  </component>
+                  <component id="fc623" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Learn factor"/>
+                    </properties>
+                  </component>
+                  <component id="43a13" class="javax.swing.JTextField" binding="spinner_learnFactor">
+                    <constraints>
+                      <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <horizontalAlignment value="11"/>
+                      <text value="0.15"/>
+                      <toolTipText value=""/>
                     </properties>
                   </component>
                 </children>

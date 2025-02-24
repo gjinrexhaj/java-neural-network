@@ -8,6 +8,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
@@ -19,7 +21,10 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
  */
 
 // TODO: get rid of line 57 post-"maven build" bug
-// TODO: implement console view
+// TODO: implement loading data into model
+// TODO: implement decision boundary graph
+// TODO: implement prediction
+// TODO: link frontend with backend neural network code
 
 public class View extends JFrame {
 
@@ -31,25 +36,34 @@ public class View extends JFrame {
     private JRadioButton mutationRadioButton;
     private JRadioButton gradientDescentRadioButton;
     private JPanel attributesPanel;
-    private JSpinner spinner1;
-    private JSpinner spinner2;
-    private JSpinner spinner3;
-    private JSpinner spinner4;
+    private JSpinner spinner_inputNodes;
+    private JSpinner spinner_hiddenNodes;
+    private JSpinner spinner_outputNodes;
     private JButton TRAINButton;
     private JButton PREDICTButton;
     private JButton analysisButton;
     private JButton saveButton;
     private JButton aboutButton;
     private JProgressBar progressBar1;
-    private JSpinner spinner5;
+    private JSpinner spinner_trainingCycles;
     private JTextArea consoleTextArea;
     private JButton CREATEButton;
     private JTree fileTree;
-    private JTextField textField1;
+    private JTextField predictionInputTextField;
+    private JTextField spinner_learnFactor;
+    private JButton loadDataButton;
+    private JButton unloadDataButton;
+    private JTextPane EXAMPLEWHATYOURDATATextPane;
+    private JPanel NeuralNetworkVisualizerPanel;
+    private JLabel predictionOutputLabel;
+    private JLabel predictionConfidenceLabel;
 
 
     // Create logger instance
     static Logger logger = new Logger();
+
+    // Create action and component listeners for all buttons and fields
+
 
     // Create and initialize application
     public static void main(String[] args) {
@@ -104,6 +118,16 @@ public class View extends JFrame {
 
         // Create file chooser gui for training data
         fileTree = new FileTree(System.getProperty("user.dir"));
-        // Populate
+
+        // Create neural network visualizer graph window
+
+        // TEMP   TEMP    TEMP
+        // define number of neurons, one layer at a time
+        List<Layer> layers = new ArrayList<>();
+        layers.add(new Layer(2));
+        layers.add(new Layer(2));
+        layers.add(new Layer(1));
+        NeuralNetworkVisualizerPanel = new NeuralNetworkVisualizer(layers);
+
     }
 }
