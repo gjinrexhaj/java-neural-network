@@ -1,9 +1,9 @@
 # Java Neural Network
 
 ###  About
-A neural network implemented in Java.
+An open-source neural network engine and frontend GUI implemented in pure Java.
 
-TODO: add screenshot of working application
+<img src="readme-docs/user-interface.png" alt="User Interface" width="800"/>
 
 
 ## Getting Started
