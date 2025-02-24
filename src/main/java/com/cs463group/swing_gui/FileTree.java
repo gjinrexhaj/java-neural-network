@@ -29,11 +29,6 @@ public class FileTree extends JTree {
             }
         }
 
-        // parse contents of textfile into model
-        if (node.isFile()) {
-            Logger.log(Logger.LogLevel.DEBUG, "FileTree: node.isFile() called", true, false);
-
-        }
 
         return ret;
     }
