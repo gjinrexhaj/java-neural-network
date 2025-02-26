@@ -19,11 +19,12 @@ public class NeuralNetworkVisualizer extends JPanel {
     private List<Layer> layers;
     private int neuronSize = 30;
     private int lineWeight = 2;
-    private Color networkColor = new Color(54, 117, 240);
+    private Color networkColor = new Color(0, 122, 255);
 
     public NeuralNetworkVisualizer(List<Layer> layers) {
         this.layers = layers;
     }
+
 
     @Override
     protected void paintComponent(Graphics g) {
