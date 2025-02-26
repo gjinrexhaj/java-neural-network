@@ -19,7 +19,7 @@ public class DifferentialNetwork {
         Logger.log(Logger.LogLevel.INFO, "Differential neural network with " + epochs + " epochs and learnRate: " + learnRate + " has been successfuly created.", true, true);
     }
 
-    // TODO: programmatically specify number of neurons
+    // TODO: programmatically make is so networks are dynamically configurable
     // in this case, 2 hidden, 1 output neuron
     DifferentialNeuron nHidden1 = new DifferentialNeuron();
     DifferentialNeuron nHidden2 = new DifferentialNeuron();

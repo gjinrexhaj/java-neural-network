@@ -13,6 +13,7 @@ import java.util.List;
  *  Defines a collection of neurons. Top-level neurons are inputs, middle neurons are
  *  "hidden", final layer is outputs. Can return prediction from network.
  */
+// TODO: programmatically make is so networks are dynamically configurable
 public class MutationNetwork {
 
     int epochs = 0; //1000;

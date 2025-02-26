@@ -11,6 +11,8 @@ import java.util.Random;
  *  of the neuron is initialized with some random double between -1 and 1.
  *  Contains mutate, remember, and forget functions and stores old weights and biases.
  */
+
+// TODO: programmatically make is so networks are dynamically configurable
 public class MutationNeuron {
 
     // randomize initial bias and weights - used in mutation training
