@@ -3,10 +3,13 @@ package com.cs463group.swing_gui;
 import com.cs463group.neural_net.utils.Logger;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
+import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,8 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
  */
 
 // TODO: get rid of line 57 post-"maven build" bug
+
+// TODO: link neural net visualizer to network attribute parameters and render on "CREATE" button
 // TODO: implement loading data into model
 // TODO: implement decision boundary graph
 // TODO: implement prediction
@@ -50,7 +55,7 @@ public class View extends JFrame {
     private JButton CREATEButton;
     private JTree fileTree;
     private JTextField predictionInputTextField;
-    private JTextField spinner_learnFactor;
+    private JTextField textField_learnFactor;
     private JButton loadDataButton;
     private JButton unloadDataButton;
     private JTextPane EXAMPLEWHATYOURDATATextPane;
@@ -58,11 +63,144 @@ public class View extends JFrame {
     private JLabel predictionOutputLabel;
     private JLabel predictionConfidenceLabel;
 
+    // TRACK ALL VALUES OF FIELDS
+    private Integer numOfInputNodes = 0;
+    private Integer numOfHiddenNodes = 0;
+    private Integer numOfOutputNodes = 0;
+    private Integer numOfTrainingCycles = 0;
+    private File previewData;
+    private File loadedData;
+    private boolean mutationTrain = false;
+    private boolean gradientDescentTrain = false;
+
+    // Create Arraylist containing neuralNetVisualizer layer values
+    List<Layer> neuralNetVisualizerLayers;
 
     // Create logger instance
     static Logger logger = new Logger();
 
-    // Create action and component listeners for all buttons and fields
+    // Create listeners for all fields
+    public View() {
+        spinner_inputNodes.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent changeEvent) {
+                numOfInputNodes = (Integer)spinner_inputNodes.getValue();
+                Logger.log(Logger.LogLevel.DEBUG, "numOfInputNodes: " + numOfInputNodes, true, false);
+            }
+        });
+        spinner_hiddenNodes.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent changeEvent) {
+                numOfHiddenNodes = (Integer)spinner_hiddenNodes.getValue();
+                Logger.log(Logger.LogLevel.DEBUG, "numOfHiddenNodes: " + numOfHiddenNodes, true, false);
+            }
+        });
+        spinner_outputNodes.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent changeEvent) {
+                numOfOutputNodes = (Integer)spinner_outputNodes.getValue();
+                Logger.log(Logger.LogLevel.DEBUG, "numOfOutputNodes: " + numOfOutputNodes, true, false);
+            }
+        });
+
+        // TODO: implement training cycles textfield param
+        spinner_trainingCycles.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent changeEvent) {
+                numOfTrainingCycles = (Integer)spinner_trainingCycles.getValue();
+                Logger.log(Logger.LogLevel.DEBUG, "numOfTrainingCycles: " + numOfTrainingCycles, true, false);
+            }
+        });
+
+        // TODO: implement CREATE button, implement parameter checks, and link backend code
+        CREATEButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                // TODO: Implement param checking and error handling
+
+
+                // update view
+                neuralNetVisualizerLayers.clear();
+                neuralNetVisualizerLayers.add(new Layer(numOfInputNodes));
+                neuralNetVisualizerLayers.add(new Layer(numOfHiddenNodes));
+                neuralNetVisualizerLayers.add(new Layer(numOfOutputNodes));
+                NeuralNetworkVisualizerPanel.updateUI();
+            }
+        });
+
+        // TODO: implement TRAIN button, implement parameter checks, and link backend code
+        TRAINButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+        // TODO: implement PREDICT button, implement parameter checks, and link backend code
+        PREDICTButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+        mutationRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+        gradientDescentRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+        unloadDataButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+        loadDataButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+        fileTree.addTreeSelectionListener(new TreeSelectionListener() {
+            @Override
+            public void valueChanged(TreeSelectionEvent treeSelectionEvent) {
+
+            }
+        });
+        analysisButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
+        //TODO: Implement saving current frame as image
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                JFileChooser chooser = new JFileChooser();
+                int returnVal = chooser.showSaveDialog(null);
+            }
+        });
+        aboutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                JOptionPane.showMessageDialog(null, "Java Neural Network [Version 0.8 - DEV]" +
+                        "\nA neural network engine and frontend GUI implemented in pure Java." +
+                        "\nhttps://github.com/gjinrexhaj/java-neural-network\n" +
+                        "\nDevelopers: " +
+                        "\nGjin Rexhaj" +
+                        "\nGerti Gjini" +
+                        "\nIbrahim Elamin" +
+                        "\nColm Duffin", "About", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+    }
+
 
 
     // Create and initialize application
@@ -107,7 +245,9 @@ public class View extends JFrame {
 
         // add working dir string to bottom of data view
         Logger.log(Logger.LogLevel.INFO, "GUI application fully initialized.", true, false);
+
     }
+
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
@@ -123,11 +263,12 @@ public class View extends JFrame {
 
         // TEMP   TEMP    TEMP
         // define number of neurons, one layer at a time
-        List<Layer> layers = new ArrayList<>();
-        layers.add(new Layer(2));
-        layers.add(new Layer(2));
-        layers.add(new Layer(1));
-        NeuralNetworkVisualizerPanel = new NeuralNetworkVisualizer(layers);
+        /*List<Layer>*/ neuralNetVisualizerLayers = new ArrayList<>();
+//        neuralNetVisualizerLayers.add(new Layer(2));
+//        neuralNetVisualizerLayers.add(new Layer(2));
+//        neuralNetVisualizerLayers.add(new Layer(1));
+//        // TEMP  TEMP     TEMP
+        NeuralNetworkVisualizerPanel = new NeuralNetworkVisualizer(neuralNetVisualizerLayers);
 
     }
 }
