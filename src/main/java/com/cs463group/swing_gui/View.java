@@ -62,8 +62,10 @@ public class View extends JFrame {
     private JPanel NeuralNetworkVisualizerPanel;
     private JLabel predictionOutputLabel;
     private JLabel predictionConfidenceLabel;
+    private JSpinner spinner_inputDimensionality;
 
     // TRACK ALL VALUES OF FIELDS
+    private Integer inputDimensionality;
     private Integer numOfInputNodes = 0;
     private Integer numOfHiddenNodes = 0;
     private Integer numOfOutputNodes = 0;
@@ -81,6 +83,13 @@ public class View extends JFrame {
 
     // Create listeners for all fields
     public View() {
+        spinner_inputDimensionality.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent changeEvent) {
+                inputDimensionality = (Integer) spinner_inputDimensionality.getValue();
+                Logger.log(Logger.LogLevel.DEBUG, "inputDimensionality: " + inputDimensionality, true, false);
+            }
+        });
         spinner_inputNodes.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent changeEvent) {
@@ -205,6 +214,18 @@ public class View extends JFrame {
 
     // Create and initialize application
     public static void main(String[] args) {
+
+        // set window decoration for linux, and window theming
+        String osName = System.getProperty("os.name").toLowerCase();
+        boolean isLinux = osName.startsWith("linux");
+
+        if (isLinux) {
+            // enable custom window decorations
+            JFrame.setDefaultLookAndFeelDecorated(true);
+            JDialog.setDefaultLookAndFeelDecorated(true);
+        }
+
+
 
         // set custom theming
         FlatMacLightLaf.setup();
