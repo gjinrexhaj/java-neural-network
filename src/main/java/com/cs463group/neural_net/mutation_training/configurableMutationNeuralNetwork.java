@@ -50,31 +50,6 @@ public class configurableMutationNeuralNetwork {
         System.out.println(String.format("female, 120, 72: network500: %.10f", network500.predict(input3)));
         System.out.println(String.format("  male, 143, 67: network500: %.10f", network500.predict(input4)));
         System.out.println(String.format(" male', 130, 66: network500: %.10f", network500.predict(input5)));
-
-
-
-        // UNCOMMENT WHEN TEST
-        /*
-        System.out.println(String.format("  male, 167, 73: network500: %.10f | network1000: %.10f", network500.predict(167, 73), network1000.predict(167, 73)));
-        System.out.println(String.format("female, 105, 67: network500: %.10f | network1000: %.10f", network500.predict(105, 67), network1000.predict(105, 67)));
-        System.out.println(String.format("female, 120, 72: network500: %.10f | network1000: %.10f", network500.predict(120, 72), network1000.predict(120, 72)));
-        System.out.println(String.format("  male, 143, 67: network500: %.10f | network1000: %.10f", network500.predict(143, 67), network1000.predict(120, 72)));
-        System.out.println(String.format(" male', 130, 66: network500: %.10f | network1000: %.10f", network500.predict(130, 66), network1000.predict(130, 66)));
-        */
-/*
-    Network network500learn1 = new Network(500, 2.0);
-    network500learn1.train(data, answers);
-
-    Network network1000learn1 = new Network(1000, 2.0);
-    network1000learn1.train(data, answers);
-
-    System.out.println("");
-    System.out.println(String.format("  male, 167, 73: network500learn1: %.10f | network1000learn1: %.10f", network500learn1.predict(167, 73), network1000learn1.predict(167, 73)));
-    System.out.println(String.format("female, 105, 67: network500learn1: %.10f | network1000learn1: %.10f", network500learn1.predict(105, 67), network1000learn1.predict(105, 67)));
-    System.out.println(String.format("female, 120, 72: network500learn1: %.10f | network1000learn1: %.10f", network500learn1.predict(120, 72), network1000learn1.predict(120, 72)));
-    System.out.println(String.format("  male, 143, 67: network500learn1: %.10f | network1000learn1: %.10f", network500learn1.predict(143, 67), network1000learn1.predict(120, 72)));
-    System.out.println(String.format(" male', 130, 66: network500learn1: %.10f | network1000learn1: %.10f", network500learn1.predict(130, 66), network1000learn1.predict(130, 66)));
-*/
     }
 
 
@@ -87,22 +62,18 @@ public class configurableMutationNeuralNetwork {
         public int numOfHiddenNeurons;
         public int numOfOutputNeurons;
         public int numOfDataInputs;
-
-        // TODO: decide if this data field even needs to exist (might need it for gradient descent)
-        // parameterize output attribute, keeps track of all
         public List<Double> outputs = new ArrayList<>();
 
         // linear representation of network
         List<Neuron> network = new ArrayList<>();
 
+        // constructor
         public Network(int epochs, int numOfDataInputs, int numOfInputNeurons, int numOfHiddenNeurons, int numOfOutputNeurons) {
             this.epochs = epochs;
             this.numOfInputNeurons = numOfInputNeurons;
             this.numOfHiddenNeurons = numOfHiddenNeurons;
             this.numOfOutputNeurons = numOfOutputNeurons;
             this.numOfDataInputs = numOfDataInputs;
-
-            // set prediction input data array equal to numOfDataInputs - 1
 
             // input layer
             for(int i = 0; i < numOfInputNeurons; i++) {
@@ -153,8 +124,6 @@ public class configurableMutationNeuralNetwork {
         }
 
 
-        // TODO: PARAMETRIZE predict ------- DO THIS AFTER NEURONS ARE FULLY PARAMETRIZED --- implement using a list
-        // TODO: make is so predict can return multiple output depending on num of output neurons specified,
         // TODO: retrofit mutation training to allow for multiple outputs and whatnot
         // TODO: verified with 3 2 1 network configuration case
         public List<Double> predict(List<Double> inputs) {
@@ -165,7 +134,7 @@ public class configurableMutationNeuralNetwork {
             List<Double> hiddenOutputs = new ArrayList<>();
             List<Double> outputOutputs = new ArrayList<>();
 
-            if(inputs.size() != numOfDataInputs) {
+            if (inputs.size() != numOfDataInputs) {
                 System.out.println("Error: Too many or too few prediction inputs specified!");
                 return null;
             }
@@ -185,7 +154,7 @@ public class configurableMutationNeuralNetwork {
 
             // iterate through all hidden neurons, compute output using preceding neuron outputs as their input
             while (j < numOfHiddenNeurons) {
-                double computation = network.get(i+j).compute(inputOutputs);
+                double computation = network.get(i + j).compute(inputOutputs);
                 outputs.add(computation);
                 hiddenOutputs.add(computation);
 
@@ -194,60 +163,21 @@ public class configurableMutationNeuralNetwork {
 
             // iterate through all output neurons, compute output using preceding neuron outputs as their input
             while (k < numOfOutputNeurons) {
-                double computation = network.get(i+j+k).compute(hiddenOutputs);
+                double computation = network.get(i + j + k).compute(hiddenOutputs);
                 outputs.add(computation);
                 outputOutputs.add(computation);
 
                 k++;
             }
 
-
-            // TODO: make it possible so more than one output can be attained from compute, right now it just returns the first element of outputlist
-            //Double tempoutput = outputOutputs.get(0);
             return outputOutputs;
-
-            // idea- start with numOfDataEntries inputs, and iterate neurons 0 - numOfInputNeurons,
-            // where your predicting each, then go from there progressively computing stuff using recursion possibly
-            // can also do this by specifying limits for recursive case, base case is ofc when it reaches end of list
-
-            // LEGACY CODE - UPDATE LATER using recursion and list parametrization
-            /*
-            return network.get(5).compute(
-                    network.get(4).compute(
-                            network.get(2).compute(inputs.get(0), inputs.get(1)),
-                            network.get(1).compute(inputs.get(0), inputs.get(1))
-                    ),
-                    network.get(3).compute(
-                            network.get(1).compute(inputs.get(0), inputs.get(1)),
-                            network.get(0).compute(inputs.get(0), inputs.get(1))
-                    )
-            );
-             */
-
         }
 
-        /*LEGACY PREDICTION CODE
-        public Double predict(Integer input1, Integer input2){
 
-            // maybe recursively traverse and return neural net values
-            return network.get(5).compute(
-                    network.get(4).compute(
-                            network.get(2).compute(input1, input2),
-                            network.get(1).compute(input1, input2)
-                    ),
-                    network.get(3).compute(
-                            network.get(1).compute(input1, input2),
-                            network.get(0).compute(input1, input2)
-                    )
-            );
-        }
-         */
 
-        // ERROR PART
-        // TODO: LAST ACTUAL PART - PARAMETERIZE TRAIN FOR MUTATION TRAINING
-        // TODO: PARAMETERIZE TRAIN ------- DO THIS AFTER NEURONS ARE FULLY PARAMETERIZED
+
+        // TODO: Parameterize mutation training method
         // TODO: DATA ENTRIES MUST EQUAL TO NUMBER OF INPUTS
-        /*
         public void train(List<List<Integer>> data, List<Double> answers){
             Double bestEpochLoss = null;
             for (int epoch = 0; epoch < epochs; epoch++){
@@ -275,7 +205,7 @@ public class configurableMutationNeuralNetwork {
                     }
                 }
             }
-        }*/
+        }
     }
 
 
@@ -311,32 +241,12 @@ public class configurableMutationNeuralNetwork {
 
         // TODO: TEST ALL CHANGES MADE BELOW, AND MAKE SURE THEY WORK AS INTENDED
 
-        /*private Double oldBias = random.nextDouble(-1, 1), bias = random.nextDouble(-1, 1);
-        public Double oldWeight1 = random.nextDouble(-1, 1), weight1 = random.nextDouble(-1, 1);
-        private Double oldWeight2 = random.nextDouble(-1, 1), weight2 = random.nextDouble(-1, 1);
-        */
-
-        // Iterate through all the neurons given weights
-
-        // TODO: REMOVE LEGACY CODE AFTER TESTING
         public void printAttributes() {
             System.out.printf("--- NEURON ATTRIBUTES ---" +
                     "\noldBias: %.15f | bias: %.15f " +
                     "\noldWeights: " + oldWeights.toString() +
                     "\nweights: " + weights.toString() +"\n\n", oldBias, bias);
         }
-
-        /*
-        public String toString(){
-
-            // maybe iterate through all weights and other stuff, concatenate them to a string, and print resulting string
-            return String.format("\nNEURON ATTRIBUTES:" +
-                    "\noldBias: %.15f | bias: %.15f " +
-                    "\noldWeights: " + oldWeights.toString() +
-                    "\nweights: " + weights.toString(), oldBias, bias);
-            //return String.format("oldBias: %.15f | bias: %.15f | oldWeight1: %.15f | weight1: %.15f | oldWeight2: %.15f | weight2: %.15f", this.oldBias, this.bias, this.oldWeight1, this.weight1, this.oldWeight2, this.weight2);
-        }
-         */
 
         // TODO: remove legacy comments when modular solution proves corerct in testing
         public void mutate(Double learnFactor){
@@ -356,20 +266,8 @@ public class configurableMutationNeuralNetwork {
                     weights.set(weight, update);
                     break;
             }
-            /*
-            int propertyToChange = random.nextInt(0, 3);
-            Double changeFactor = (learnFactor == null) ? random.nextDouble(-1, 1) : (learnFactor * random.nextDouble(-1, 1));
-            if (propertyToChange == 0){
-                this.bias += changeFactor;
-            } else if (propertyToChange == 1){
-                this.weight1 += changeFactor;
-            } else {
-                this.weight2 += changeFactor;
-            };
-
-             */
         }
-        // TODO: remove legacy comments when modular solution proves corerct in testing
+        // TODO: remove legacy comments when modular solution proves correct in testing
         public void forget(){
             bias = oldBias;
 
@@ -390,13 +288,6 @@ public class configurableMutationNeuralNetwork {
             //oldWeight2 = weight2;
         }
 
-        // TODO: TODO TODO
-        // TODO: parameterize compute (must also make parameter fields (num of inputs) a list, take inputs as param)
-        //      TODO: could also make this function vlid and simply return the computation of each and every neuron using
-        //      TOOD: their internal List<Double> weights list
-        //  --- implement inputs using a list
-        // TODO: TEST CURRENT SOLTUION - RETROFIT predict() TO WORK WITH THESE CHANGES
-
         public double compute(List<Double> inputs) {
             // iterate through all values, multiply each index by its associated weight, then add the bias at the end
             double preActivation = 0;
@@ -408,30 +299,6 @@ public class configurableMutationNeuralNetwork {
             double output = Util.sigmoid(preActivation);
             return output;
         }
-
-        /* LEGACY CODE
-        public double compute(double input1, double input2){
-            // FAILED ATTEMPT
-            //double preActivation = bias;
-            //for(int i = 0; i < numOfWeights; i++){
-            //    preActivation += weights.get(i).doubleValue() * input1;
-            //}
-            //double output = Util.sigmoid(preActivation);
-            //return output;
-
-            // NEW ATTEMPT
-            //double preActivation = 0.0;
-            //for(int i = 0; i < numOfWeights; i++) {
-            //    preActivation += weights.get(i)*;
-            //}
-
-            // LEGACY CODE
-            double preActivation = (weights.get(0) * input1) + (weights.get(1) * input2) + bias;
-            double output = Util.sigmoid(preActivation);
-            return output;
-        }
-        */
-
     }
 
 
