@@ -1,5 +1,7 @@
 package com.cs463group.neural_net.mutation_training;
 
+import jdk.net.NetworkPermission;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
@@ -8,48 +10,51 @@ import java.lang.Math;
 
 public class configurableMutationNeuralNetwork {
 
-    int numOfInputNeurons;
-    int numOfHiddenNeurons;
-    int numOfOutputNeurons;
-
     public static void main( String[] args ) {
         configurableMutationNeuralNetwork app = new configurableMutationNeuralNetwork();
         app.trainAndPredict();
     }
 
     public void trainAndPredict() {
-        List<List<Integer>> data = new ArrayList<List<Integer>>();
 
-        Network network500= new Network(500, 1.0,2, 3, 2, 1);
-        //Network network1000= new Network(1000, 1.0, 3, 2, 1);
 
-        // prototpye training data // legacy
-        data.add(Arrays.asList(115, 66));
-        data.add(Arrays.asList(175, 78));
-        data.add(Arrays.asList(205, 72));
-        data.add(Arrays.asList(120, 67));
+        // create the network
+        Network network500= new Network(500,2, 3, 2, 1);
+
+        // create and load 2d arraylist with data, and create list containing corresponding answers
+        List<List<Double>> data = new ArrayList<List<Double>>();
+        data.add(Arrays.asList(115.0, 66.0));
+        data.add(Arrays.asList(175.0, 78.0));
+        data.add(Arrays.asList(205.0, 72.0));
+        data.add(Arrays.asList(120.0, 67.0));
         List<Double> answers = Arrays.asList(1.0,0.0,0.0,1.0);
 
-        //network500.train(data, answers);
-        //network1000.train(data, answers);
+        // train the network with aforementioned data and answers
+        network500.train(data, answers);
 
-
+        // inputs for prediction
         List<Double> input1 = List.of(167.0, 73.0);
         List<Double> input2 = List.of(105.0, 67.0);
         List<Double> input3 = List.of(120.0, 72.0);
         List<Double> input4 = List.of(143.0, 67.0);
         List<Double> input5 = List.of(130.0, 66.0);
 
+        // 0 is male, 1 is female
+        System.out.println(input1 + " | Expected output: 0 | Actual output: " + network500.predict(input1));
+        System.out.println(input2 + " | Expected output: 1 | Actual output: " + network500.predict(input2));
+        System.out.println(input3 + " | Expected output: 1 | Actual output: " + network500.predict(input3));
+        System.out.println(input4 + " | Expected output: 0 | Actual output: " + network500.predict(input4));
+        System.out.println(input5 + " | Expected output: 0 | Actual output: " + network500.predict(input5));
 
-        List<Double> testPrediction1 = network500.predict(input1);
 
 
-        // TODO: figure out how to format elements in list then print said elements with specified formatting
+        /*         // TODO: figure out how to format elements in list then print said elements with specified formatting
         System.out.println(String.format("  male, 167, 73: network500: %.10f", network500.predict(input1)));
         System.out.println(String.format("female, 105, 67: network500: %.10f", network500.predict(input2)));
         System.out.println(String.format("female, 120, 72: network500: %.10f", network500.predict(input3)));
         System.out.println(String.format("  male, 143, 67: network500: %.10f", network500.predict(input4)));
         System.out.println(String.format(" male', 130, 66: network500: %.10f", network500.predict(input5)));
+        */
     }
 
 
@@ -70,6 +75,7 @@ public class configurableMutationNeuralNetwork {
         // constructor
         public Network(int epochs, int numOfDataInputs, int numOfInputNeurons, int numOfHiddenNeurons, int numOfOutputNeurons) {
             this.epochs = epochs;
+            this.learnFactor = null;
             this.numOfInputNeurons = numOfInputNeurons;
             this.numOfHiddenNeurons = numOfHiddenNeurons;
             this.numOfOutputNeurons = numOfOutputNeurons;
@@ -77,21 +83,21 @@ public class configurableMutationNeuralNetwork {
 
             // input layer
             for(int i = 0; i < numOfInputNeurons; i++) {
-                Neuron neuron = new Neuron(0);
+                Neuron neuron = new Neuron(numOfDataInputs);
                 network.add(neuron);
-                System.out.println(network.get(i));
+                neuron.printAttributes();
             }
             // hidden layer
-            for(int i = numOfInputNeurons; i < numOfHiddenNeurons; i++) {
+            for(int i = 0; i < numOfHiddenNeurons; i++) {
                 Neuron neuron = new Neuron(numOfInputNeurons);
                 network.add(neuron);
-                System.out.println(network.get(i));
+                neuron.printAttributes();
             }
             // output layer
-            for(int i = numOfHiddenNeurons; i < numOfOutputNeurons; i++) {
-                Neuron neuron = new Neuron(numOfOutputNeurons);
+            for(int i = 0; i < numOfOutputNeurons; i++) {
+                Neuron neuron = new Neuron(numOfHiddenNeurons);
                 network.add(neuron);
-                System.out.println(network.get(i));
+                neuron.printAttributes();
             }
         }
 
@@ -178,16 +184,18 @@ public class configurableMutationNeuralNetwork {
 
         // TODO: Parameterize mutation training method
         // TODO: DATA ENTRIES MUST EQUAL TO NUMBER OF INPUTS
-        public void train(List<List<Integer>> data, List<Double> answers){
+
+        public void train(List<List<Double>> data, List<Double> answers){
             Double bestEpochLoss = null;
             for (int epoch = 0; epoch < epochs; epoch++){
-                // adapt neuron
-                Neuron epochNeuron = network.get(epoch % 6);
+                // pick a random neuron to adjust, mutate it with learnRate constructor parameter
+                Neuron epochNeuron = network.get(epoch % network.size());
                 epochNeuron.mutate(this.learnFactor);
 
                 List<Double> predictions = new ArrayList<Double>();
                 for (int i = 0; i < data.size(); i++){
-                    predictions.add(i, this.predict(data.get(i).get(0), data.get(i).get(1)));
+                    // TODO: possibly change how data is stored (maybe not have it in a list of lists)
+                    predictions.addAll(i, this.predict(data.get(i)));
                 }
                 Double thisEpochLoss = Util.meanSquareLoss(answers, predictions);
 
@@ -240,7 +248,6 @@ public class configurableMutationNeuralNetwork {
 
 
         // TODO: TEST ALL CHANGES MADE BELOW, AND MAKE SURE THEY WORK AS INTENDED
-
         public void printAttributes() {
             System.out.printf("--- NEURON ATTRIBUTES ---" +
                     "\noldBias: %.15f | bias: %.15f " +
