@@ -22,22 +22,28 @@ public class configurableMutationNeuralNetwork {
 
         // create and load 2d arraylist with data, and create list containing corresponding answers
         List<List<Double>> data = new ArrayList<List<Double>>();
+
         data.add(Arrays.asList(115.0, 66.0));
         data.add(Arrays.asList(175.0, 78.0));
         data.add(Arrays.asList(205.0, 72.0));
         data.add(Arrays.asList(120.0, 67.0));
 
+
         //List<Double> answers = Arrays.asList(1.0,0.0,0.0,1.0);
         //List<List<Double>> answers = new ArrayList<List<Double>>();
         List<Double> answers = new ArrayList<>();
+
         answers.add(1.0);
         answers.add(0.0);
         answers.add(0.0);
         answers.add(1.0);
 
+
         // CAN ALSO LOAD DATA IN PROGRAMMATICALLY FROM TXT FILE LIKE SO
+        // for this use case, the loaded dataset below is too large
+        /*
         Scanner scan;
-        File file = new File("test-data/weight-height-gender/500_Person_Gender_Height_Weight_Index.txt");
+        File file = new File("test-data/weight-height-gender/Source-Data.txt");
         try {
             scan = new Scanner(file);
             scan.useDelimiter("[,\\n]");
@@ -64,6 +70,8 @@ public class configurableMutationNeuralNetwork {
         } catch (FileNotFoundException e1) {
             e1.printStackTrace();
         }
+
+         */
 
 
 
@@ -228,7 +236,8 @@ public class configurableMutationNeuralNetwork {
             Double bestEpochLoss = null;
             for (int epoch = 0; epoch < epochs; epoch++){
                 // pick a random neuron to adjust, mutate it with learnRate constructor parameter
-                Neuron epochNeuron = network.get(epoch % network.size());
+                int chooseNeuron = epoch % network.size();
+                Neuron epochNeuron = network.get(chooseNeuron);
                 epochNeuron.mutate(learnFactor);
 
                 List<Double> predictions = new ArrayList<Double>();
@@ -297,7 +306,7 @@ public class configurableMutationNeuralNetwork {
         // TODO: remove legacy comments when modular solution proves corerct in testing
         public void mutate(Double learnFactor){
 
-            int changeWeightOrBias = random.nextInt(0,1);
+            int changeWeightOrBias = random.nextInt(0,2);
             Double changeFactor = (learnFactor == null) ? random.nextDouble(-1, 1) : (learnFactor * random.nextDouble(-1, 1));
             switch (changeWeightOrBias) {
                 case 0:
