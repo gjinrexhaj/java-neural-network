@@ -1,0 +1,3 @@
+height: cm
+weight: kg
+gender: 0 is male, 1 is female
