@@ -148,7 +148,7 @@
                             <constraints/>
                             <properties>
                               <font name="Source Code Pro"/>
-                              <text value="EXAMPLE - WHAT YOUR DATA SHOULD LOOK LIKE (for 2 inputs and 1 output in this case):&#10;&#10;INPUT 1        INPUT 2        ANSWER&#10;Weight (kg), Height (cm), Gender (0-male, 1-female)&#10;&#10;-----------------example data begin-----------------&#10;66, 172, 0&#10;76, 182, 0&#10;57, 176, 1&#10;etc 1&#10;etc 2&#10;etc ...&#10;etc n&#10;------------------example data end------------------&#10;&#10;LOAD DATA BY SELECTING A .txt FILE VIA FILE TREE&#10;ON THE LEFT, AND CLICKING &quot;Load Data&quot;&#10;"/>
+                              <text value="EXAMPLE - WHAT YOUR DATA SHOULD LOOK LIKE (for 2 inputs and 1 output in this case):&#10;&#10;INPUT 1        INPUT 2        ANSWER&#10;Height (cm), Weight (kg), Gender (0-male, 1-female)&#10;&#10;-----------------example data begin-----------------&#10;172, 66, 0&#10;182, 76, 0&#10;176, 57, 1&#10;etc 1&#10;etc 2&#10;etc ...&#10;etc n&#10;------------------example data end------------------&#10;&#10;LOAD DATA BY SELECTING A .txt FILE VIA FILE TREE&#10;ON THE LEFT, AND CLICKING &quot;Load Data&quot;&#10;"/>
                             </properties>
                           </component>
                         </children>
