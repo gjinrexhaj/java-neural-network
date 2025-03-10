@@ -1,7 +1,5 @@
 package com.cs463group.neural_net.mutation_training;
 
-import jdk.net.NetworkPermission;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -15,31 +13,26 @@ public class configurableMutationNeuralNetwork {
     }
 
     public void trainAndPredict() {
-
-
         // create the network
         Network testnet = new Network(1000,2, 3, 2, 1);
 
-        // create and load 2d arraylist with data, and create list containing corresponding answers
-        List<List<Double>> data = new ArrayList<List<Double>>();
+        // create and load 2d arraylist with data and separate 1d arraylist to hold answers
+        List<List<Double>> data = new ArrayList<>();
+        List<Double> answers = new ArrayList<>();
 
+        // TESTER CODE: manually load test data into data list and each entry's corresponding answer in answer list
         data.add(Arrays.asList(115.0, 66.0));
         data.add(Arrays.asList(175.0, 78.0));
         data.add(Arrays.asList(205.0, 72.0));
         data.add(Arrays.asList(120.0, 67.0));
 
-
-        //List<Double> answers = Arrays.asList(1.0,0.0,0.0,1.0);
-        //List<List<Double>> answers = new ArrayList<List<Double>>();
-        List<Double> answers = new ArrayList<>();
-
         answers.add(1.0);
         answers.add(0.0);
         answers.add(0.0);
         answers.add(1.0);
-
 
         // CAN ALSO LOAD DATA IN PROGRAMMATICALLY FROM TXT FILE LIKE SO
+        // TODO: Implement a fileLoader function in Utils that loads data in a parametrized fashion
         // for this use case, the loaded dataset below is too large
         /*
         Scanner scan;
@@ -70,23 +63,19 @@ public class configurableMutationNeuralNetwork {
         } catch (FileNotFoundException e1) {
             e1.printStackTrace();
         }
-
          */
-
-
-
 
         // train the network with aforementioned data and answers
         testnet.train(data, answers);
 
-        // load inputs for prediction
+        // manually load inputs for prediction
         List<Double> input1 = List.of(167.0, 73.0);
         List<Double> input2 = List.of(105.0, 67.0);
         List<Double> input3 = List.of(120.0, 72.0);
         List<Double> input4 = List.of(143.0, 67.0);
         List<Double> input5 = List.of(130.0, 66.0);
 
-        // 0 is male, 1 is female
+        // log output of neural net against expected outputs: for this data, 0 is male and 1 is female
         System.out.println(input1 + " | Expected output: 0 | Actual output: " + testnet.predict(input1));
         System.out.println(input2 + " | Expected output: 1 | Actual output: " + testnet.predict(input2));
         System.out.println(input3 + " | Expected output: 1 | Actual output: " + testnet.predict(input3));
@@ -95,11 +84,12 @@ public class configurableMutationNeuralNetwork {
     }
 
 
+    // Network class: Represents a collection of neurons and their interconnectedness
     class Network {
         public int epochs;
-        public Double learnFactor = null;
+        public Double learnFactor;
 
-        // parametrized attributes
+        // parametrized network attributes
         public int numOfInputNeurons;
         public int numOfHiddenNeurons;
         public int numOfOutputNeurons;
@@ -225,13 +215,13 @@ public class configurableMutationNeuralNetwork {
                 Neuron epochNeuron = network.get(chooseNeuron);
                 epochNeuron.mutate(learnFactor);
 
-                List<Double> predictions = new ArrayList<Double>();
+                List<Double> predictions = new ArrayList<>();
                 for (int i = 0; i < data.size(); i++){
                     predictions.addAll(i, this.predict(data.get(i)));
                 }
                 Double thisEpochLoss = Util.meanSquareLoss(answers, predictions);
 
-                if (epoch % 10 == 0) System.out.println(String.format("Epoch: %s | bestEpochLoss: %.15f | thisEpochLoss: %.15f", epoch, bestEpochLoss, thisEpochLoss));
+                if (epoch % 10 == 0) System.out.printf("Epoch: %s | bestEpochLoss: %.15f | thisEpochLoss: %.15f%n", epoch, bestEpochLoss, thisEpochLoss);
 
                 if (bestEpochLoss == null){
                     bestEpochLoss = thisEpochLoss;
@@ -248,11 +238,7 @@ public class configurableMutationNeuralNetwork {
         }
     }
 
-
-
-
-
-
+    // Neuron class: defines the attributes and behaviors of a single neuron
     class Neuron {
         Random random = new Random();
 
@@ -287,7 +273,7 @@ public class configurableMutationNeuralNetwork {
 
         public void mutate(Double learnFactor){
             int changeWeightOrBias = random.nextInt(0,2);
-            Double changeFactor = (learnFactor == null) ? random.nextDouble(-1, 1) : (learnFactor * random.nextDouble(-1, 1));
+            double changeFactor = (learnFactor == null) ? random.nextDouble(-1, 1) : (learnFactor * random.nextDouble(-1, 1));
             switch (changeWeightOrBias) {
                 case 0:
                     //change bias
@@ -322,7 +308,7 @@ public class configurableMutationNeuralNetwork {
             // iterate through all values, multiply each index by its associated weight, then add the bias at the end
             double preActivation = 0;
             for(int i = 0; i < numOfWeights; i++){
-                preActivation += weights.get(i).doubleValue() * inputs.get(i);
+                preActivation += weights.get(i) * inputs.get(i);
             }
             preActivation += bias;
             double output = Util.sigmoid(preActivation);
@@ -330,11 +316,8 @@ public class configurableMutationNeuralNetwork {
         }
     }
 
-
-
-
-
-    class Util {
+    // Util class: Contains a bunch of helper methods to aid functions carried out by neural network
+    static class Util {
         public static double sigmoid(double in){
             return 1 / (1 + Math.exp(-in));
         }
