@@ -2,10 +2,9 @@ package com.cs463group.neural_net.mutation_training;
 
 import jdk.net.NetworkPermission;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Arrays;
-import java.util.Random;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 import java.lang.Math;
 
 public class configurableMutationNeuralNetwork {
@@ -19,7 +18,7 @@ public class configurableMutationNeuralNetwork {
 
 
         // create the network
-        Network network500= new Network(500,2, 3, 2, 1);
+        Network testnet = new Network(1000,2, 3, 2, 1);
 
         // create and load 2d arraylist with data, and create list containing corresponding answers
         List<List<Double>> data = new ArrayList<List<Double>>();
@@ -27,12 +26,52 @@ public class configurableMutationNeuralNetwork {
         data.add(Arrays.asList(175.0, 78.0));
         data.add(Arrays.asList(205.0, 72.0));
         data.add(Arrays.asList(120.0, 67.0));
-        List<Double> answers = Arrays.asList(1.0,0.0,0.0,1.0);
+
+        //List<Double> answers = Arrays.asList(1.0,0.0,0.0,1.0);
+        //List<List<Double>> answers = new ArrayList<List<Double>>();
+        List<Double> answers = new ArrayList<>();
+        answers.add(1.0);
+        answers.add(0.0);
+        answers.add(0.0);
+        answers.add(1.0);
+
+        // CAN ALSO LOAD DATA IN PROGRAMMATICALLY FROM TXT FILE LIKE SO
+        Scanner scan;
+        File file = new File("test-data/weight-height-gender/500_Person_Gender_Height_Weight_Index.txt");
+        try {
+            scan = new Scanner(file);
+            scan.useDelimiter("[,\\n]");
+            int i = 0;
+
+            while (scan.hasNext()) {
+                i++;
+                String token = scan.next();
+                if (i == 1) {
+                    // data add 1 and next
+                    String nextToken = scan.next();
+                    data.add(Arrays.asList(Double.parseDouble(token), Double.parseDouble(nextToken)));
+                    System.out.print(i + ": ");
+                    System.out.println(token + ", " + nextToken);
+                } else if (i == 2) {
+                    // do nothing
+                    System.out.print(i + ": ");
+                    answers.add(Double.parseDouble(token));
+                    System.out.println(token);
+                    i = 0;
+                }
+            }
+
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        }
+
+
+
 
         // train the network with aforementioned data and answers
-        network500.train(data, answers);
+        testnet.train(data, answers);
 
-        // inputs for prediction
+        // load inputs for prediction
         List<Double> input1 = List.of(167.0, 73.0);
         List<Double> input2 = List.of(105.0, 67.0);
         List<Double> input3 = List.of(120.0, 72.0);
@@ -40,11 +79,11 @@ public class configurableMutationNeuralNetwork {
         List<Double> input5 = List.of(130.0, 66.0);
 
         // 0 is male, 1 is female
-        System.out.println(input1 + " | Expected output: 0 | Actual output: " + network500.predict(input1));
-        System.out.println(input2 + " | Expected output: 1 | Actual output: " + network500.predict(input2));
-        System.out.println(input3 + " | Expected output: 1 | Actual output: " + network500.predict(input3));
-        System.out.println(input4 + " | Expected output: 0 | Actual output: " + network500.predict(input4));
-        System.out.println(input5 + " | Expected output: 0 | Actual output: " + network500.predict(input5));
+        System.out.println(input1 + " | Expected output: 0 | Actual output: " + testnet.predict(input1));
+        System.out.println(input2 + " | Expected output: 1 | Actual output: " + testnet.predict(input2));
+        System.out.println(input3 + " | Expected output: 1 | Actual output: " + testnet.predict(input3));
+        System.out.println(input4 + " | Expected output: 0 | Actual output: " + testnet.predict(input4));
+        System.out.println(input5 + " | Expected output: 0 | Actual output: " + testnet.predict(input5));
 
 
 
@@ -190,7 +229,7 @@ public class configurableMutationNeuralNetwork {
             for (int epoch = 0; epoch < epochs; epoch++){
                 // pick a random neuron to adjust, mutate it with learnRate constructor parameter
                 Neuron epochNeuron = network.get(epoch % network.size());
-                epochNeuron.mutate(this.learnFactor);
+                epochNeuron.mutate(learnFactor);
 
                 List<Double> predictions = new ArrayList<Double>();
                 for (int i = 0; i < data.size(); i++){
