@@ -1,8 +1,7 @@
 package com.cs463group.neural_net;
 
 
-import com.cs463group.neural_net.gradient_descent.DifferentialNetwork;
-import com.cs463group.neural_net.mutation_training.MutationNetwork;
+import com.cs463group.neural_net.mutation_training.Network;
 import com.cs463group.neural_net.utils.Logger;
 
 import java.util.ArrayList;
@@ -21,57 +20,76 @@ import java.util.List;
 public class App {
 
     public static void main(String[] args) {
-
-        List<List<Double>> data = new ArrayList<List<Double>>();
-
         Logger.log(Logger.LogLevel.INFO, "CLI application has been launched", true, true);
 
+        // create the network
+        Network testnet = new Network(1000,2, 3, 2, 1);
 
-        // TODO: figure out why gradient descent training doesn't work with this particular data
-        // ( "data must pivot on 0") -> may need to reformat data
+        // create and load 2d arraylist with data and separate 1d arraylist to hold answers
+        List<List<Double>> data = new ArrayList<>();
+        List<Double> answers = new ArrayList<>();
 
-        // prototpye data      weight, height - Works with mutation training
+        // TESTER CODE: manually load test data into data list and each entry's corresponding answer in answer list
         data.add(Arrays.asList(115.0, 66.0));
         data.add(Arrays.asList(175.0, 78.0));
         data.add(Arrays.asList(205.0, 72.0));
         data.add(Arrays.asList(120.0, 67.0));
-        // prototype answers: 1.0: female, 0.0: male
-        List<Double> answers = Arrays.asList(1.0,0.0,0.0,1.0);
 
+        answers.add(1.0);
+        answers.add(0.0);
+        answers.add(0.0);
+        answers.add(1.0);
 
-        // create and mutation train networks with 500 and 1000 epochs respectively
-        MutationNetwork mutationTestEpoch500 = new MutationNetwork(500);
-        MutationNetwork mutationTestEpoch1000 = new MutationNetwork(1000);
-
-        mutationTestEpoch500.train(data, answers);
-        mutationTestEpoch1000.train(data, answers);
-
-        // create and differentiation train networks with 500 and 1000 epochs respectively
-        //DifferentialNetwork diffTestEpoch500 = new DifferentialNetwork(500, 0.15);
-        //DifferentialNetwork diffTestEpoch1000 = new DifferentialNetwork(1000, 0.15);
-
-        //diffTestEpoch500.train(data, answers);
-        //diffTestEpoch1000.train(data, answers);
-
-
-
-        // TODO: Implement printing out a network's results at the class level, calculated with Network.predict
-        System.out.println("------------MUTATION TRAINING RESULTS-------------");
-        System.out.println(String.format("  male, 167, 73: network500learn1: %.10f | network1000learn1: %.10f", mutationTestEpoch500.predict(167.0, 73.0), mutationTestEpoch1000.predict(167.0, 73.0)));
-        System.out.println(String.format("female, 105, 67: network500learn1: %.10f | network1000learn1: %.10f", mutationTestEpoch500.predict(105.0, 67.0), mutationTestEpoch1000.predict(105.0, 67.0)));
-        System.out.println(String.format("female, 120, 72: network500learn1: %.10f | network1000learn1: %.10f", mutationTestEpoch500.predict(120.0, 72.0), mutationTestEpoch1000.predict(120.0, 72.0)));
-        System.out.println(String.format("  male, 143, 67: network500learn1: %.10f | network1000learn1: %.10f", mutationTestEpoch500.predict(143.0, 67.0), mutationTestEpoch1000.predict(120.0, 72.0)));
-        System.out.println(String.format("  male, 130, 66: network500learn1: %.10f | network1000learn1: %.10f", mutationTestEpoch500.predict(130.0, 66.0), mutationTestEpoch1000.predict(130.0, 66.0)));
-
-
+        // CAN ALSO LOAD DATA IN PROGRAMMATICALLY FROM TXT FILE LIKE SO
+        // TODO: Implement a dataLoader in Utils that loads data in a parametrized fashion
+        // for this use case, the loaded dataset below is too large
         /*
-        System.out.println("------------DIFFERENTIATION TRAINING RESULTS-------------");
-        System.out.println(String.format("  male, 167, 73: network500learn1: %.10f | network1000learn1: %.10f", diffTestEpoch500.predict(167.0, 73.0), diffTestEpoch1000.predict(167.0, 73.0)));
-        System.out.println(String.format("female, 105, 67: network500learn1: %.10f | network1000learn1: %.10f", diffTestEpoch500.predict(105.0, 67.0), diffTestEpoch1000.predict(105.0, 67.0)));
-        System.out.println(String.format("female, 120, 72: network500learn1: %.10f | network1000learn1: %.10f", diffTestEpoch500.predict(120.0, 72.0), diffTestEpoch1000.predict(120.0, 72.0)));
-        System.out.println(String.format("  male, 143, 67: network500learn1: %.10f | network1000learn1: %.10f", diffTestEpoch500.predict(143.0, 67.0), diffTestEpoch1000.predict(120.0, 72.0)));
-        System.out.println(String.format("  male, 130, 66: network500learn1: %.10f | network1000learn1: %.10f", diffTestEpoch500.predict(130.0, 66.0), diffTestEpoch1000.predict(130.0, 66.0)));
+        Scanner scan;
+        File file = new File("test-data/weight-height-gender/Source-Data.txt");
+        try {
+            scan = new Scanner(file);
+            scan.useDelimiter("[,\\n]");
+            int i = 0;
+
+            while (scan.hasNext()) {
+                i++;
+                String token = scan.next();
+                if (i == 1) {
+                    // data add 1 and next
+                    String nextToken = scan.next();
+                    data.add(Arrays.asList(Double.parseDouble(token), Double.parseDouble(nextToken)));
+                    System.out.print(i + ": ");
+                    System.out.println(token + ", " + nextToken);
+                } else if (i == 2) {
+                    // do nothing
+                    System.out.print(i + ": ");
+                    answers.add(Double.parseDouble(token));
+                    System.out.println(token);
+                    i = 0;
+                }
+            }
+
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        }
          */
+
+        // train the network with aforementioned data and answers
+        testnet.train(data, answers);
+
+        // manually load inputs for prediction
+        List<Double> input1 = List.of(167.0, 73.0);
+        List<Double> input2 = List.of(105.0, 67.0);
+        List<Double> input3 = List.of(120.0, 72.0);
+        List<Double> input4 = List.of(143.0, 67.0);
+        List<Double> input5 = List.of(130.0, 66.0);
+
+        // log output of neural net against expected outputs: for this data, 0 is male and 1 is female
+        System.out.println(input1 + " | Expected output: 0 | Actual output: " + testnet.predict(input1));
+        System.out.println(input2 + " | Expected output: 1 | Actual output: " + testnet.predict(input2));
+        System.out.println(input3 + " | Expected output: 1 | Actual output: " + testnet.predict(input3));
+        System.out.println(input4 + " | Expected output: 0 | Actual output: " + testnet.predict(input4));
+        System.out.println(input5 + " | Expected output: 0 | Actual output: " + testnet.predict(input5));
 
         Logger.closeLogger();
     }
