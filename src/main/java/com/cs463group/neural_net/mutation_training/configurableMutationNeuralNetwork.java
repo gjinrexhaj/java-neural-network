@@ -92,16 +92,6 @@ public class configurableMutationNeuralNetwork {
         System.out.println(input3 + " | Expected output: 1 | Actual output: " + testnet.predict(input3));
         System.out.println(input4 + " | Expected output: 0 | Actual output: " + testnet.predict(input4));
         System.out.println(input5 + " | Expected output: 0 | Actual output: " + testnet.predict(input5));
-
-
-
-        /*         // TODO: figure out how to format elements in list then print said elements with specified formatting
-        System.out.println(String.format("  male, 167, 73: network500: %.10f", network500.predict(input1)));
-        System.out.println(String.format("female, 105, 67: network500: %.10f", network500.predict(input2)));
-        System.out.println(String.format("female, 120, 72: network500: %.10f", network500.predict(input3)));
-        System.out.println(String.format("  male, 143, 67: network500: %.10f", network500.predict(input4)));
-        System.out.println(String.format(" male', 130, 66: network500: %.10f", network500.predict(input5)));
-        */
     }
 
 
@@ -226,12 +216,7 @@ public class configurableMutationNeuralNetwork {
             return outputOutputs;
         }
 
-
-
-
-        // TODO: Parameterize mutation training method
-        // TODO: DATA ENTRIES MUST EQUAL TO NUMBER OF INPUTS
-
+        // Train the neural-net via brute-forcing random mutations
         public void train(List<List<Double>> data, List<Double> answers){
             Double bestEpochLoss = null;
             for (int epoch = 0; epoch < epochs; epoch++){
@@ -242,7 +227,6 @@ public class configurableMutationNeuralNetwork {
 
                 List<Double> predictions = new ArrayList<Double>();
                 for (int i = 0; i < data.size(); i++){
-                    // TODO: possibly change how data is stored (maybe not have it in a list of lists)
                     predictions.addAll(i, this.predict(data.get(i)));
                 }
                 Double thisEpochLoss = Util.meanSquareLoss(answers, predictions);
@@ -294,8 +278,6 @@ public class configurableMutationNeuralNetwork {
             }
         }
 
-
-        // TODO: TEST ALL CHANGES MADE BELOW, AND MAKE SURE THEY WORK AS INTENDED
         public void printAttributes() {
             System.out.printf("--- NEURON ATTRIBUTES ---" +
                     "\noldBias: %.15f | bias: %.15f " +
@@ -303,9 +285,7 @@ public class configurableMutationNeuralNetwork {
                     "\nweights: " + weights.toString() +"\n\n", oldBias, bias);
         }
 
-        // TODO: remove legacy comments when modular solution proves corerct in testing
         public void mutate(Double learnFactor){
-
             int changeWeightOrBias = random.nextInt(0,2);
             Double changeFactor = (learnFactor == null) ? random.nextDouble(-1, 1) : (learnFactor * random.nextDouble(-1, 1));
             switch (changeWeightOrBias) {
@@ -322,16 +302,13 @@ public class configurableMutationNeuralNetwork {
                     break;
             }
         }
-        // TODO: remove legacy comments when modular solution proves correct in testing
+
         public void forget(){
             bias = oldBias;
 
             for(int i = 0; i < numOfWeights; i++) {
                 weights.set(i, oldWeights.get(i));
             }
-
-            //weight1 = oldWeight1;
-            //weight2 = oldWeight2;
         }
         public void remember(){
             oldBias = bias;
@@ -339,14 +316,11 @@ public class configurableMutationNeuralNetwork {
             for(int i = 0; i < numOfWeights; i++) {
                 oldWeights.set(i, weights.get(i));
             }
-            //oldWeight1 = weight1;
-            //oldWeight2 = weight2;
         }
 
         public double compute(List<Double> inputs) {
             // iterate through all values, multiply each index by its associated weight, then add the bias at the end
             double preActivation = 0;
-
             for(int i = 0; i < numOfWeights; i++){
                 preActivation += weights.get(i).doubleValue() * inputs.get(i);
             }
@@ -368,7 +342,7 @@ public class configurableMutationNeuralNetwork {
             double sigmoid = Util.sigmoid(in);
             return sigmoid * (1 - in);
         }
-        /** Assumes array args are same length */
+
         public static Double meanSquareLoss(List<Double> correctAnswers, List<Double> predictedAnswers){
             double sumSquare = 0;
             for (int i = 0; i < correctAnswers.size(); i++){
