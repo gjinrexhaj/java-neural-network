@@ -22,11 +22,15 @@ public class Functions {
     }
 
     // Mean square loss function
-    public static Double meanSquareLoss(List<Double> correctAnswers, List<Double> predictedAnswers){
+    public static Double meanSquareLoss(List<List<Double>> correctAnswers, List<Double> predictedAnswers){
         double sumSquare = 0;
         for (int i = 0; i < correctAnswers.size(); i++){
-            double error = correctAnswers.get(i) - predictedAnswers.get(i);
-            sumSquare += (error * error);
+            for (int j = 0; j < correctAnswers.get(i).size(); j++){
+                double error = correctAnswers.get(i).get(j) - predictedAnswers.get(i);
+                sumSquare += (error * error);
+            }
+            //double error = correctAnswers.get(i) - predictedAnswers.get(i);
+            //sumSquare += (error * error);
         }
         return sumSquare / (correctAnswers.size());
     }

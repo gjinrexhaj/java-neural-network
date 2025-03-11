@@ -31,18 +31,19 @@ public class ConsoleApp {
 
         // create and load 2d arraylist with data and separate 1d arraylist to hold answers
         List<List<Double>> data = new ArrayList<>();
-        List<Double> answers = new ArrayList<>();
+        List<List<Double>> answers = new ArrayList<>();
 
         // TESTER CODE: manually load test data into data list and each entry's corresponding answer in answer list
+        // num of entries should be equal to numOfDataInputs
         data.add(Arrays.asList(115.0, 66.0));
         data.add(Arrays.asList(175.0, 78.0));
         data.add(Arrays.asList(205.0, 72.0));
         data.add(Arrays.asList(120.0, 67.0));
-
-        answers.add(1.0);
-        answers.add(0.0);
-        answers.add(0.0);
-        answers.add(1.0);
+        // num of entries should be equal to numOutputNeurons
+        answers.add(Arrays.asList(1.0));
+        answers.add(Arrays.asList(0.0));
+        answers.add(Arrays.asList(0.0));
+        answers.add(Arrays.asList(1.0));
 
         // train the network with aforementioned data and answers
         testnet.train(data, answers);

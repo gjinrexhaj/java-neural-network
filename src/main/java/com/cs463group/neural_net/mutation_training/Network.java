@@ -130,7 +130,7 @@ public class Network {
     }
 
     // Train the neural-net via brute-forcing random mutations
-    public void train(List<List<Double>> data, List<Double> answers){
+    public void train(List<List<Double>> data, List<List<Double>> answers){
         Double bestEpochLoss = null;
         for (int epoch = 0; epoch < epochs; epoch++){
             // pick a random neuron to adjust, mutate it with learnRate constructor parameter
