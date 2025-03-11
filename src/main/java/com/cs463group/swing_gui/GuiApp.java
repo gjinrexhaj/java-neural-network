@@ -14,7 +14,6 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
 
@@ -32,7 +31,7 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 // TODO: implement prediction
 // TODO: link frontend with backend neural network code
 
-public class View extends JFrame {
+public class GuiApp extends JFrame {
 
     // Define application GUI components
     private JPanel mainPanel;
@@ -83,7 +82,7 @@ public class View extends JFrame {
     static Logger logger = new Logger();
 
     // Create listeners for all fields
-    public View() {
+    public GuiApp() {
         spinner_inputDimensionality.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent changeEvent) {
@@ -237,7 +236,7 @@ public class View extends JFrame {
         JFrame frame = new JFrame("Neural Network GUI Frontend");
 
 
-        frame.setContentPane(new View().mainPanel);
+        frame.setContentPane(new GuiApp().mainPanel);
         frame.pack();
         frame.setSize(1280,720);
 

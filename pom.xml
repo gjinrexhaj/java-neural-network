@@ -29,7 +29,7 @@
           <archive>
             <manifest>
               <classpathPrefix>lib</classpathPrefix>
-              <mainClass>com.cs463group.neural_net.App</mainClass>
+              <mainClass>com.cs463group.neural_net.ConsoleApp</mainClass>
             </manifest>
           </archive>
         </configuration>

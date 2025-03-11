@@ -4,6 +4,13 @@ import com.cs463group.neural_net.utils.Functions;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  Network.java
+ *  Created on 2/12/2025
+ *  Defines a collection of neurons. Top-level neurons are inputs, middle neurons are
+ *  "hidden", final layer is outputs. Can return prediction from network.
+ */
+
 public class Network {
     public int epochs;
     public Double learnFactor;

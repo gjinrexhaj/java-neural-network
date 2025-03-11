@@ -1,10 +1,17 @@
 package com.cs463group.neural_net.mutation_training;
 
 import com.cs463group.neural_net.utils.Functions;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+/**
+ *  Neuron.java
+ *  Created on 2/11/2025
+ *  Defines a neuron object which contains bias and weights, the value
+ *  of the neuron is initialized with some random double between -1 and 1.
+ *  Contains mutate, remember, and forget functions and stores old weights and biases.
+ */
 
 class Neuron {
     Random random = new Random();
@@ -12,7 +19,7 @@ class Neuron {
     // new code, initialize weights and bias upon construction
     private int numOfWeights;
     public List<Double> weights = new ArrayList<>();
-    // init onld and new bias with temp values to avoid null
+    // init old and new bias with temp values to avoid null
     public Double bias = 0.0;
 
     public List<Double> oldWeights = new ArrayList<>();

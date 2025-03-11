@@ -4,7 +4,7 @@ package com.cs463group.neural_net.utils;
 import java.util.List;
 
 /**
- *  Utilities.java
+ *  Functions.java
  *  Created on 2/11/2025
  *  Contains commonly used helper functions to be used in other classes
  */

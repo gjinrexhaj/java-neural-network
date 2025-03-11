@@ -14,16 +14,20 @@ import java.util.List;
  *  Launching point of the program. Commandline variant
  */
 
-// TODO: List requirements for GUI frontend
-// TODO: Implement custom neural network specifications -> number of neurons at every layer
+// TODO: Implement a dataLoader in bridge that loads data in a parametrized fashion
 
-public class App {
+public class ConsoleApp {
 
     public static void main(String[] args) {
         Logger.log(Logger.LogLevel.INFO, "CLI application has been launched", true, true);
 
         // create the network
-        Network testnet = new Network(1000,2, 3, 2, 1);
+        int numEpochs = 1000;
+        int numDataInputs = 2;
+        int numInputNeurons = 3;
+        int numHiddenNeurons = 2;
+        int numOutputNeurons = 1;
+        Network testnet = new Network(numEpochs,numDataInputs, numInputNeurons, numHiddenNeurons, numOutputNeurons);
 
         // create and load 2d arraylist with data and separate 1d arraylist to hold answers
         List<List<Double>> data = new ArrayList<>();
@@ -39,40 +43,6 @@ public class App {
         answers.add(0.0);
         answers.add(0.0);
         answers.add(1.0);
-
-        // CAN ALSO LOAD DATA IN PROGRAMMATICALLY FROM TXT FILE LIKE SO
-        // TODO: Implement a dataLoader in Utils that loads data in a parametrized fashion
-        // for this use case, the loaded dataset below is too large
-        /*
-        Scanner scan;
-        File file = new File("test-data/weight-height-gender/Source-Data.txt");
-        try {
-            scan = new Scanner(file);
-            scan.useDelimiter("[,\\n]");
-            int i = 0;
-
-            while (scan.hasNext()) {
-                i++;
-                String token = scan.next();
-                if (i == 1) {
-                    // data add 1 and next
-                    String nextToken = scan.next();
-                    data.add(Arrays.asList(Double.parseDouble(token), Double.parseDouble(nextToken)));
-                    System.out.print(i + ": ");
-                    System.out.println(token + ", " + nextToken);
-                } else if (i == 2) {
-                    // do nothing
-                    System.out.print(i + ": ");
-                    answers.add(Double.parseDouble(token));
-                    System.out.println(token);
-                    i = 0;
-                }
-            }
-
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-        }
-         */
 
         // train the network with aforementioned data and answers
         testnet.train(data, answers);
