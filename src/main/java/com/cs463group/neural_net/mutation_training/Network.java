@@ -142,7 +142,7 @@ public class Network {
             for (int i = 0; i < data.size(); i++){
                 predictions.addAll(i, this.predict(data.get(i)));
             }
-            Double thisEpochLoss = Functions.meanSquareLoss(answers, predictions);
+            Double thisEpochLoss = Functions.meanSquareLossREV2(answers, predictions);
 
             if (epoch % 10 == 0) System.out.printf("Epoch: %s | bestEpochLoss: %.15f | thisEpochLoss: %.15f%n", epoch, bestEpochLoss, thisEpochLoss);
 

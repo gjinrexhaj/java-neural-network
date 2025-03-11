@@ -21,8 +21,20 @@ public class Functions {
         return sigmoid * (1 - sigmoid);
     }
 
+    // Mean square loss function - Legacy
+    // TODO: remove in favor of revised version below
     // Mean square loss function
-    public static Double meanSquareLoss(List<List<Double>> correctAnswers, List<Double> predictedAnswers){
+    public static Double meanSquareLoss(List<Double> correctAnswers, List<Double> predictedAnswers){
+        double sumSquare = 0;
+        for (int i = 0; i < correctAnswers.size(); i++){
+            double error = correctAnswers.get(i) - predictedAnswers.get(i);
+            sumSquare += (error * error);
+        }
+        return sumSquare / (correctAnswers.size());
+    }
+
+    // Mean square loss function - Revision
+    public static Double meanSquareLossREV2(List<List<Double>> correctAnswers, List<Double> predictedAnswers){
         double sumSquare = 0;
         for (int i = 0; i < correctAnswers.size(); i++){
             for (int j = 0; j < correctAnswers.get(i).size(); j++){
