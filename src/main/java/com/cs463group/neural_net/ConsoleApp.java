@@ -14,8 +14,6 @@ import java.util.List;
  *  Launching point of the program. Commandline variant
  */
 
-// TODO: Implement a dataLoader in bridge that loads data in a parametrized fashion
-
 public class ConsoleApp {
 
     public static void main(String[] args) {
