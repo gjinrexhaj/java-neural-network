@@ -1,7 +1,6 @@
 package com.cs463group.swing_gui;
 
 import com.cs463group.neural_net.utils.Logger;
-
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
@@ -14,7 +13,6 @@ import java.io.File;
  *  Instantiated by View.java using working directory path.
  */
 
-// TODO: Support loading training data into model via selecting .txt file from FileTree view
 
 public class FileTree extends JTree {
     public FileTree(String path) {

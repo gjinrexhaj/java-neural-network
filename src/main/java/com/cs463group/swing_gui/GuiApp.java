@@ -18,7 +18,7 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
 
 /**
- *  View.java
+ *  GuiApp.java
  *  Created on 2/12/2025
  *  Contains all frontend GUI code for neural network visualizer
  */
@@ -30,6 +30,10 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 // TODO: implement decision boundary graph
 // TODO: implement prediction
 // TODO: link frontend with backend neural network code
+
+// TODO: Integrate backend with frontend - creation of nn, loading of data, training nn, making a prediction
+// TODO: Implement loading data into dataLoader and seeing loaded data in data view panel
+// TODO: log all important interactions such that they show on console view
 
 public class GuiApp extends JFrame {
 
@@ -64,7 +68,7 @@ public class GuiApp extends JFrame {
     private JLabel predictionConfidenceLabel;
     private JSpinner spinner_inputDimensionality;
 
-    // TRACK ALL VALUES OF FIELDS
+    // TRACK ALL VALUES OF FIELDS + DATA TO FEED INTO BACKEND
     private Integer inputDimensionality;
     private Integer numOfInputNodes = 0;
     private Integer numOfHiddenNodes = 0;
@@ -72,6 +76,9 @@ public class GuiApp extends JFrame {
     private Integer numOfTrainingCycles = 0;
     private File previewData;
     private File loadedData;
+    private List<List<Double>> inputData;
+    private List<List<Double>> expectedAnswers;
+
     private boolean mutationTrain = false;
     private boolean gradientDescentTrain = false;
 
