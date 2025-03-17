@@ -209,13 +209,13 @@ public class GuiApp extends JFrame {
 
                 Logger.log(Logger.LogLevel.INFO, "Neural Network created! Stats listed below.", true, false);
                 Logger.log(Logger.LogLevel.INFO,
-                        "Training method           : " + traintype
-                        + "\nInput Dimensionality      : " + inputDimensionality
-                        + "\nNumber of input neurons   : " + numOfInputNodes
-                        + "\nNumber of hidden neurons  : " + numOfHiddenNodes
-                        + "\nNumber of output neurons  : " + numOfOutputNodes
-                        + "\nNumber of training cycles : " + numOfTrainingCycles
-                        + "\nLearning Rate             : " + learningRate, false, false);
+                        "   Training method           : " + traintype
+                        + "\n   Input Dimensionality      : " + inputDimensionality
+                        + "\n   Number of input neurons   : " + numOfInputNodes
+                        + "\n   Number of hidden neurons  : " + numOfHiddenNodes
+                        + "\n   Number of output neurons  : " + numOfOutputNodes
+                        + "\n   Number of training cycles : " + numOfTrainingCycles
+                        + "\n   Learning Rate             : " + learningRate, false, false);
 
                 // WARNING CHECK
                 // check if low training cycle count
@@ -226,8 +226,8 @@ public class GuiApp extends JFrame {
                             "Creation Warning", JOptionPane.WARNING_MESSAGE);
                 } else {
                     // if no warning, notify user it created w/o warnings
-                    JOptionPane.showMessageDialog(mainPanel, "Network Created Successfully!"
-                                    + "\n\n--- ATTRIBUTES ---\n"
+                    JOptionPane.showMessageDialog(mainPanel, "Network Created Successfully without warnings!"
+                                    + "\n\n--- ATTRIBUTES ---"
                                     + "\nTraining method: " + traintype
                                     + "\nInput Dimensionality: " + inputDimensionality
                                     + "\nNumber of input neurons: " + numOfInputNodes
