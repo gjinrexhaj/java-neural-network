@@ -247,7 +247,7 @@ public class GuiApp extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 if(neuralNetwork == null) {
                     JOptionPane.showMessageDialog(mainPanel, "Neural Network does not exist.",
-                            "Training Error", JOptionPane.ERROR_MESSAGE);
+                            "Prediction Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
