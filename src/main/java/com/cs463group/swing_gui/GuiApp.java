@@ -195,8 +195,9 @@ public class GuiApp extends JFrame {
                 }
 
                 Logger.log(Logger.LogLevel.INFO, "Neural Network created! Stats listed below.", true, false);
-                Logger.log(Logger.LogLevel.INFO, "Input Dimensionality " + inputDimensionality
-                        + "\nTraining method           : " + traintype
+                Logger.log(Logger.LogLevel.INFO,
+                        "Training method           : " + traintype
+                        + "\nInput Dimensionality        : " + inputDimensionality
                         + "\nNumber of input neurons   : " + numOfInputNodes
                         + "\nNumber of hidden neurons  : " + numOfHiddenNodes
                         + "\nNumber of output neurons  : " + numOfOutputNodes
@@ -210,7 +211,22 @@ public class GuiApp extends JFrame {
                     JOptionPane.showMessageDialog(mainPanel, "Low number of training cycles specified." +
                                     "\nThis may result in severe under-performance depending on the dataset.",
                             "Creation Warning", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    // if no warning, notify user it created w/o warnings
+                    JOptionPane.showMessageDialog(mainPanel, "Network Created Successfully!"
+                                    + "\n\n--- ATTRIBUTES ---\n"
+                                    + "\nTraining method: " + traintype
+                                    + "\nInput Dimensionality: " + inputDimensionality
+                                    + "\nNumber of input neurons: " + numOfInputNodes
+                                    + "\nNumber of hidden neurons: " + numOfHiddenNodes
+                                    + "\nNumber of output neurons: " + numOfOutputNodes
+                                    + "\nNumber of training cycles: " + numOfTrainingCycles
+                                    + "\nLearning Rate: " + learningRate,
+                            "Creation Notification", JOptionPane.INFORMATION_MESSAGE);
                 }
+
+
+
 
             }
         });
