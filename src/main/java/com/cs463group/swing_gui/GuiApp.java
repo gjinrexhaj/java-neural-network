@@ -1,6 +1,8 @@
 package com.cs463group.swing_gui;
 
 import com.cs463group.neural_net.utils.Logger;
+import com.cs463group.bridge.DataLoader;
+import com.cs463group.neural_net.mutation_training.Network;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -69,11 +71,16 @@ public class GuiApp extends JFrame {
     private JSpinner spinner_inputDimensionality;
 
     // TRACK ALL VALUES OF FIELDS + DATA TO FEED INTO BACKEND
-    private Integer inputDimensionality;
+    private Integer inputDimensionality = 0;
     private Integer numOfInputNodes = 0;
     private Integer numOfHiddenNodes = 0;
     private Integer numOfOutputNodes = 0;
     private Integer numOfTrainingCycles = 0;
+    private Double learningRate = 0.15;
+
+    // ALLOCATE NEURAL NETWORK OBJECT
+    Network neuralNetwork;
+
     private File previewData;
     private File loadedData;
     private List<List<Double>> inputData;
@@ -134,6 +141,42 @@ public class GuiApp extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 // TODO: Implement param checking and error handling
 
+                // ERROR CHECKING
+                // check if a training method is selected
+                if (!(mutationTrain || gradientDescentTrain)) {
+                    // display appropriate error
+                    JOptionPane.showMessageDialog(mainPanel, "Malformed Parameter." +
+                                    "\nPlease select a training method.",
+                            "Creation Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // check input dimensionality
+                if (inputDimensionality < 1) {
+                    // display appropriate error
+                    JOptionPane.showMessageDialog(mainPanel, "Malformed Parameter." +
+                                    "\nInput Dimensionality should be greater than 0. Please note that input dimensionality parameter is contingent on the data you feed the network.",
+                            "Creation Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // check if no values are zero
+                if (numOfInputNodes < 1 || numOfHiddenNodes < 1 || numOfOutputNodes < 1) {
+                    // display appropriate error
+                    JOptionPane.showMessageDialog(mainPanel, "Malformed Parameter." +
+                                    "\nNumber of nodes for each category should be greater than 0. Please note that number of output nodes is contingent on the data you feed the network.",
+                            "Creation Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // check if negativeLearnRate
+                if (learningRate < 0.0) {
+                    JOptionPane.showMessageDialog(mainPanel, "Malformed Parameter." +
+                                    "\nLearning Rate should be greater than zero." +
+                                    "\nIdeal range (0.1 - 1)",
+                            "Creation Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
                 // update view
                 neuralNetVisualizerLayers.clear();
@@ -141,6 +184,36 @@ public class GuiApp extends JFrame {
                 neuralNetVisualizerLayers.add(new Layer(numOfHiddenNodes));
                 neuralNetVisualizerLayers.add(new Layer(numOfOutputNodes));
                 NeuralNetworkVisualizerPanel.updateUI();
+
+                // create neural network with aforementioned parameters
+                neuralNetwork = new Network(numOfTrainingCycles, learningRate, inputDimensionality, numOfInputNodes, numOfHiddenNodes, numOfOutputNodes);
+
+                // logger stuff
+                String traintype = "";
+                if (mutationTrain) {
+                    traintype = "mutation";
+                } else if (gradientDescentTrain) {
+                    traintype = "gradientDescent";
+                }
+
+                Logger.log(Logger.LogLevel.INFO, "Neural Network created! Stats listed below.", true, false);
+                Logger.log(Logger.LogLevel.INFO, "Input Dimensionality " + inputDimensionality
+                        + "\nTraining method           : " + traintype
+                        + "\nNumber of input neurons   : " + numOfInputNodes
+                        + "\nNumber of hidden neurons  : " + numOfHiddenNodes
+                        + "\nNumber of output neurons  : " + numOfOutputNodes
+                        + "\nNumber of training cycles : " + numOfTrainingCycles
+                        + "\nLearning Rate             : " + learningRate, false, false);
+
+                // WARNING CHECK
+                // check if low training cycle count
+                if (numOfTrainingCycles < 100) {
+                    // Warn user of low number of training cycles
+                    JOptionPane.showMessageDialog(mainPanel, "Low number of training cycles specified." +
+                                    "\nThis may result in severe under-performance depending on the dataset.",
+                            "Creation Warning", JOptionPane.WARNING_MESSAGE);
+                }
+
             }
         });
 
@@ -148,26 +221,36 @@ public class GuiApp extends JFrame {
         TRAINButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                if(neuralNetwork == null) {
+                    JOptionPane.showMessageDialog(mainPanel, "Neural Network does not exist.",
+                            "Training Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         // TODO: implement PREDICT button, implement parameter checks, and link backend code
         PREDICTButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                if(neuralNetwork == null) {
+                    JOptionPane.showMessageDialog(mainPanel, "Neural Network does not exist.",
+                            "Training Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         mutationRadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                mutationTrain = true;
+                gradientDescentTrain = false;
+                Logger.log(Logger.LogLevel.DEBUG, "mutationTrainEnabled", true, false);
             }
         });
         gradientDescentRadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                gradientDescentTrain = true;
+                mutationTrain = false;
+                Logger.log(Logger.LogLevel.DEBUG, "gradientDescentTrainEnabled", true, false);
             }
         });
         unloadDataButton.addActionListener(new ActionListener() {
@@ -213,6 +296,15 @@ public class GuiApp extends JFrame {
                         "\nGerti Gjini" +
                         "\nIbrahim Elamin" +
                         "\nColm Duffin", "About", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+        textField_learnFactor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                learningRate = Double.parseDouble(textField_learnFactor.getText());
+                Logger.log(Logger.LogLevel.DEBUG, "learningRate: " + learningRate, true, false);
+
             }
         });
     }
@@ -288,14 +380,7 @@ public class GuiApp extends JFrame {
         fileTree = new FileTree(System.getProperty("user.dir"));
 
         // Create neural network visualizer graph window
-
-        // TEMP   TEMP    TEMP
-        // define number of neurons, one layer at a time
-        /*List<Layer>*/ neuralNetVisualizerLayers = new ArrayList<>();
-//        neuralNetVisualizerLayers.add(new Layer(2));
-//        neuralNetVisualizerLayers.add(new Layer(2));
-//        neuralNetVisualizerLayers.add(new Layer(1));
-//        // TEMP  TEMP     TEMP
+        neuralNetVisualizerLayers = new ArrayList<>();
         NeuralNetworkVisualizerPanel = new NeuralNetworkVisualizer(neuralNetVisualizerLayers);
 
     }
