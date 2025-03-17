@@ -139,6 +139,19 @@ public class GuiApp extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
+                // confirmation dialog if neural network already exists
+                if(neuralNetwork != null) {
+                    int confirm = JOptionPane.showOptionDialog(
+                            mainPanel, "Are you sure you'd like to create a new Neural Network? This will delete and replace the current network, undoing all training.",
+                            "Creation Confirmation", JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE, null, null, null);
+                    if (confirm == 0) {
+                        // continue
+                    } else {
+                        return;
+                    }
+                }
+
                 // PARAMETER CHECKING
                 // check if a training method is selected
                 if (!(mutationTrain || gradientDescentTrain)) {
