@@ -27,7 +27,7 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
 // TODO: get rid of line 57 post-"maven build" bug
 
-// TODO: link neural net visualizer to network attribute parameters and render on "CREATE" button
+// TODO: IMPLEMENT GRADIENT DESCENT SELECTION ONCE GRADIENT DESCENT BACKEND IS IMPLEMENTED AND/OR CONSOLIDATED
 // TODO: implement loading data into model
 // TODO: implement decision boundary graph
 // TODO: implement prediction
@@ -126,7 +126,6 @@ public class GuiApp extends JFrame {
             }
         });
 
-        // TODO: implement training cycles textfield param
         spinner_trainingCycles.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent changeEvent) {
@@ -135,13 +134,12 @@ public class GuiApp extends JFrame {
             }
         });
 
-        // TODO: implement CREATE button, implement parameter checks, and link backend code
+        // TODO: implement CREATE button, IMPLEMENT GRADIENT DESCENT METHOD SELECTION ONCE BACKEND IS AVAILABLE
         CREATEButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                // TODO: Implement param checking and error handling
 
-                // ERROR CHECKING
+                // PARAMETER CHECKING
                 // check if a training method is selected
                 if (!(mutationTrain || gradientDescentTrain)) {
                     // display appropriate error
