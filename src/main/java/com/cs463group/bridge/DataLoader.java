@@ -34,9 +34,11 @@ public class DataLoader {
         System.out.println("NUM OUTNEUR: " + numOfOutputNeurons);
         System.out.println("RECORD SIZE: " + Records.size());
 
-        List<List<Double>> DataInputs = seperateInputs(Records, inputDimensionality);
+        boolean isOk = isMalformed(Records, inputDimensionality, numOfOutputNeurons);
+        List<List<Double>> DataInputs = separateInputs(Records, inputDimensionality);
         List<List<Double>> DataAnswers = seperateAnswers(Records, numOfOutputNeurons);
 
+        System.out.println("malformed:   " + isOk);
         System.out.println("Records:     " + Records);
         System.out.println("dataInputs:  " + DataInputs);
         System.out.println("dataAnswers: " + DataAnswers);
@@ -66,7 +68,20 @@ public class DataLoader {
         return formattedData;
     }
 
-    public static List<List<Double>> seperateInputs(List<List<Double>> fileContents, int inputDimensionality) {
+
+    // Returns true if input is ok, returns false if not.
+    public static boolean isMalformed(List<List<Double>> fileContents, int inputDimensionality, int numOfOutputNeurons) {
+
+        if (fileContents.getFirst().size() == numOfOutputNeurons + inputDimensionality) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+
+    public static List<List<Double>> separateInputs(List<List<Double>> fileContents, int inputDimensionality) {
         List<List<Double>> inputs = new ArrayList<>();
 
         for(int i = 0; i < fileContents.size(); i++) {
