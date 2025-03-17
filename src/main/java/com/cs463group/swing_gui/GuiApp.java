@@ -210,7 +210,7 @@ public class GuiApp extends JFrame {
                 Logger.log(Logger.LogLevel.INFO, "Neural Network created! Stats listed below.", true, false);
                 Logger.log(Logger.LogLevel.INFO,
                         "Training method           : " + traintype
-                        + "\nInput Dimensionality        : " + inputDimensionality
+                        + "\nInput Dimensionality      : " + inputDimensionality
                         + "\nNumber of input neurons   : " + numOfInputNodes
                         + "\nNumber of hidden neurons  : " + numOfHiddenNodes
                         + "\nNumber of output neurons  : " + numOfOutputNodes
