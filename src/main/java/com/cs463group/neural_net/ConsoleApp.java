@@ -3,9 +3,9 @@ package com.cs463group.neural_net;
 
 import com.cs463group.neural_net.mutation_training.Network;
 import com.cs463group.neural_net.utils.Logger;
+import com.cs463group.bridge.DataLoader;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -25,14 +25,16 @@ public class ConsoleApp {
         int numInputNeurons = 3;
         int numHiddenNeurons = 2;
         int numOutputNeurons = 1;
-        Network testnet = new Network(numEpochs,numDataInputs, numInputNeurons, numHiddenNeurons, numOutputNeurons);
+        Network testnet = new Network(numEpochs, 1.0, numDataInputs, numInputNeurons, numHiddenNeurons, numOutputNeurons);
 
         // create and load 2d arraylist with data and separate 1d arraylist to hold answers
+        List<List<Double>> loadedFile = new ArrayList<>();
         List<List<Double>> data = new ArrayList<>();
         List<List<Double>> answers = new ArrayList<>();
 
         // TESTER CODE: manually load test data into data list and each entry's corresponding answer in answer list
         // num of entries should be equal to numOfDataInputs
+        /* LEGACY MANUAL TESTERCODE
         data.add(Arrays.asList(115.0, 66.0));
         data.add(Arrays.asList(175.0, 78.0));
         data.add(Arrays.asList(205.0, 72.0));
@@ -42,9 +44,16 @@ public class ConsoleApp {
         answers.add(Arrays.asList(0.0));
         answers.add(Arrays.asList(0.0));
         answers.add(Arrays.asList(1.0));
+         */
+        loadedFile = DataLoader.loadData("test-data/weight-height-gender/4-entries/Source-data.csv");
+        data = DataLoader.separateInputs(loadedFile, numDataInputs);
+        answers = DataLoader.seperateAnswers(loadedFile, numOutputNeurons);
+
+
+
 
         // train the network with aforementioned data and answers
-        testnet.train(data, answers);
+        testnet.mutationTrain(data, answers);
 
         // manually load inputs for prediction
         List<Double> input1 = List.of(167.0, 73.0);
