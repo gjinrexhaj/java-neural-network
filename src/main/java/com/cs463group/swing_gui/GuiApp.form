@@ -416,7 +416,7 @@
                     </constraints>
                     <properties>
                       <horizontalAlignment value="11"/>
-                      <text value="0.15"/>
+                      <text value="1.0"/>
                       <toolTipText value=""/>
                     </properties>
                   </component>

@@ -183,8 +183,7 @@ public class GuiApp extends JFrame {
                 // check if negativeLearnRate
                 if (learningRate < 0.0) {
                     JOptionPane.showMessageDialog(mainPanel, "Malformed Parameter." +
-                                    "\nLearning Rate should be greater than zero." +
-                                    "\nIdeal range (0.1 - 1)",
+                                    "\nLearning Rate should be greater than zero.",
                             "Creation Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
