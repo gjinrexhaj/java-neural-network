@@ -302,14 +302,7 @@ public class GuiApp extends JFrame {
 
             }
         });
-        //TODO: Implement saving current frame as image
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                JFileChooser chooser = new JFileChooser();
-                int returnVal = chooser.showSaveDialog(null);
-            }
-        });
+
         aboutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {

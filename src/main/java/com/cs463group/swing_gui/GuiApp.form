@@ -490,12 +490,6 @@
             <constraints/>
             <properties/>
           </component>
-          <component id="fec70" class="javax.swing.JButton" binding="saveButton" default-binding="true">
-            <constraints/>
-            <properties>
-              <text value="Save"/>
-            </properties>
-          </component>
           <component id="278e3" class="javax.swing.JToolBar$Separator">
             <constraints/>
             <properties/>
