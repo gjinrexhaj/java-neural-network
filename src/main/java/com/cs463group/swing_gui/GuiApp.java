@@ -82,6 +82,7 @@ public class GuiApp extends JFrame {
     List<Double> PredictionInput = new ArrayList<>();
 
     private boolean dataLoaded = false;
+    private static boolean debugMode;
 
     static String osName;
     static boolean isLinux;
@@ -105,21 +106,25 @@ public class GuiApp extends JFrame {
             @Override
             public void stateChanged(ChangeEvent changeEvent) {
                 numOfInputNodes = (Integer)spinner_inputNodes.getValue();
-                Logger.log(Logger.LogLevel.DEBUG, "numOfInputNodes: " + numOfInputNodes, true, false);
+
+                if (debugMode)
+                    Logger.log(Logger.LogLevel.DEBUG, "numOfInputNodes: " + numOfInputNodes, true, false);
             }
         });
         spinner_hiddenNodes.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent changeEvent) {
                 numOfHiddenNodes = (Integer)spinner_hiddenNodes.getValue();
-                Logger.log(Logger.LogLevel.DEBUG, "numOfHiddenNodes: " + numOfHiddenNodes, true, false);
+                if (debugMode)
+                    Logger.log(Logger.LogLevel.DEBUG, "numOfHiddenNodes: " + numOfHiddenNodes, true, false);
             }
         });
         spinner_outputNodes.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent changeEvent) {
                 numOfOutputNodes = (Integer)spinner_outputNodes.getValue();
-                Logger.log(Logger.LogLevel.DEBUG, "numOfOutputNodes: " + numOfOutputNodes, true, false);
+                if (debugMode)
+                    Logger.log(Logger.LogLevel.DEBUG, "numOfOutputNodes: " + numOfOutputNodes, true, false);
             }
         });
 
@@ -127,7 +132,8 @@ public class GuiApp extends JFrame {
             @Override
             public void stateChanged(ChangeEvent changeEvent) {
                 numOfTrainingCycles = (Integer)spinner_trainingCycles.getValue();
-                Logger.log(Logger.LogLevel.DEBUG, "numOfTrainingCycles: " + numOfTrainingCycles, true, false);
+                if (debugMode)
+                    Logger.log(Logger.LogLevel.DEBUG, "numOfTrainingCycles: " + numOfTrainingCycles, true, false);
             }
         });
 
@@ -309,7 +315,8 @@ public class GuiApp extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 mutationTrain = true;
                 gradientDescentTrain = false;
-                Logger.log(Logger.LogLevel.DEBUG, "mutationTrainEnabled", true, false);
+                if (debugMode)
+                    Logger.log(Logger.LogLevel.DEBUG, "mutationTrainEnabled", true, false);
             }
         });
 
@@ -318,7 +325,8 @@ public class GuiApp extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 gradientDescentTrain = true;
                 mutationTrain = false;
-                Logger.log(Logger.LogLevel.DEBUG, "gradientDescentTrainEnabled", true, false);
+                if (debugMode)
+                    Logger.log(Logger.LogLevel.DEBUG, "gradientDescentTrainEnabled", true, false);
             }
         });
 
@@ -414,7 +422,8 @@ public class GuiApp extends JFrame {
                     }
                 }
 
-                Logger.log(Logger.LogLevel.DEBUG, "filePath = " + filePath, true, false);
+                if (debugMode)
+                    Logger.log(Logger.LogLevel.DEBUG, "filePath = " + filePath, true, false);
             }
         });
 
@@ -444,7 +453,8 @@ public class GuiApp extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 learningRate = Double.parseDouble(textField_learnFactor.getText());
-                Logger.log(Logger.LogLevel.DEBUG, "learningRate: " + learningRate, true, false);
+                if (debugMode)
+                    Logger.log(Logger.LogLevel.DEBUG, "learningRate: " + learningRate, true, false);
 
             }
         });
@@ -485,6 +495,21 @@ public class GuiApp extends JFrame {
         FlatMacLightLaf.setup();
         Font newFont = new Font("Arial", Font.PLAIN, 14);
         UIManager.put("defaultFont", newFont);
+
+        // Prompt user if they'd like to use debug mode
+        int debugConfirm = JOptionPane.showOptionDialog(
+                null, "Would you like to launch the program in debug mode?" +
+                        " Debug mode will create more verbose console logs and files.",
+                "Startup Mode Prompt", JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, null, null);
+        if (debugConfirm == 0) {
+            debugMode = true;
+            Logger.log(Logger.LogLevel.DEBUG, "ENTERING DEBUG MODE", true, false);
+        } else {
+            debugMode = false;
+        }
+
+
 
         // set attributes
         JFrame frame = new JFrame("Neural Network GUI Frontend");
