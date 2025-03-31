@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
@@ -61,7 +62,6 @@ public class GuiApp extends JFrame {
     private JTextPane loadedDataView;
     private JPanel NeuralNetworkVisualizerPanel;
     private JLabel predictionOutputLabel;
-    private JLabel predictionConfidenceLabel;
 
     // TRACK ALL VALUES OF FIELDS + DATA TO FEED INTO BACKEND
     private Integer numOfInputNodes = 0;
@@ -78,6 +78,9 @@ public class GuiApp extends JFrame {
     List<List<Double>> LoadedFile = new ArrayList<>();
     List<List<Double>> LoadedData = new ArrayList<>();
     List<List<Double>> LoadedAnswers = new ArrayList<>();
+
+    List<Double> PredictionInput = new ArrayList<>();
+
     private boolean dataLoaded = false;
 
     static String osName;
@@ -242,8 +245,6 @@ public class GuiApp extends JFrame {
             }
         });
 
-        // TODO: implement TRAIN button, implement parameter checks, and link backend code
-        // TODO: use fields LoadedData, and LoadedAnswers.
         TRAINButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -275,7 +276,6 @@ public class GuiApp extends JFrame {
             }
         });
 
-        // TODO: implement PREDICT button, implement parameter checks, and link backend code
         PREDICTButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -284,8 +284,26 @@ public class GuiApp extends JFrame {
                             "Prediction Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+
+                PredictionInput.clear();
+                String text = predictionInputTextField.getText();
+                List<String> temp = new ArrayList<>();
+                temp.addAll(Arrays.asList(text.split(",")));
+                PredictionInput = convertToDoubleList(temp);
+
+                List<Double> prediction = new ArrayList<>();
+
+                if (mutationTrain) {
+                    prediction = mutNeuralNetwork.predict(PredictionInput);
+                } else if (gradientDescentTrain) {
+                    prediction = difNeuralNetwork.predict(PredictionInput);
+                }
+
+                predictionOutputLabel.setText("Prediction: " + prediction);
             }
+
         });
+
         mutationRadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -319,7 +337,6 @@ public class GuiApp extends JFrame {
 
             }
         });
-
 
         // Displays data in textview and loads into data lists
         loadDataButton.addActionListener(new ActionListener() {
@@ -367,8 +384,8 @@ public class GuiApp extends JFrame {
                 dataLoaded = true;
 
                 LoadedFile = DataLoader.loadData(filePath);
-                LoadedData = DataLoader.separateInputs(LoadedData, numOfInputNodes);
-                LoadedAnswers = DataLoader.seperateAnswers(LoadedData, numOfOutputNodes);
+                LoadedData = DataLoader.separateInputs(LoadedFile, numOfInputNodes);
+                LoadedAnswers = DataLoader.seperateAnswers(LoadedFile, numOfOutputNodes);
 
                 JOptionPane.showMessageDialog(mainPanel, filePath + " loaded successfully!\n"
                         + "# Inputs: " + numOfInputNodes
@@ -411,17 +428,18 @@ public class GuiApp extends JFrame {
         aboutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                JOptionPane.showMessageDialog(null, "Java Neural Network [Version 0.8 - DEV]" +
+                JOptionPane.showMessageDialog(null, "Java Neural Network [Version 0.9 - DEV]" +
                         "\nA neural network engine and frontend GUI implemented in pure Java." +
                         "\nhttps://github.com/gjinrexhaj/java-neural-network\n" +
                         "\nDevelopers: " +
                         "\nGjin Rexhaj" +
-                        "\nGerti Gjini" +
+                        "\nColm Duffin" +
                         "\nIbrahim Elamin" +
-                        "\nColm Duffin", "About", JOptionPane.INFORMATION_MESSAGE);
+                        "\nGerti Gjini", "About", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
+        // update value of PredictionInput in accordance with textfield
         textField_learnFactor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -432,9 +450,23 @@ public class GuiApp extends JFrame {
         });
     }
 
+    // Helper method to convert string list into double list
+    public static List<Double> convertToDoubleList(List<String> stringList) {
+        List<Double> doubleList = new ArrayList<>();
+        for (String str : stringList) {
+            try {
+                doubleList.add(Double.parseDouble(str));
+            } catch (NumberFormatException e) {
+                System.err.println("Error converting string to double: " + str);
+                // Handle the exception as needed, e.g., skip the element, use a default value, etc.
+            }
+        }
+        return doubleList;
+    }
 
 
-    // Create and initialize application
+
+    // Crate and initialize application
     public static void main(String[] args) {
 
         // set window decoration for linux, and window theming

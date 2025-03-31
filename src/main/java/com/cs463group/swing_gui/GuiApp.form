@@ -179,7 +179,9 @@
                             <preferred-size width="150" height="-1"/>
                           </grid>
                         </constraints>
-                        <properties/>
+                        <properties>
+                          <text value=""/>
+                        </properties>
                       </component>
                       <vspacer id="6e9bf">
                         <constraints>
@@ -220,7 +222,7 @@
                       </component>
                     </children>
                   </grid>
-                  <grid id="74394" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="74394" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -230,33 +232,16 @@
                     <children>
                       <component id="e21cb" class="javax.swing.JLabel" binding="predictionOutputLabel">
                         <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
-                          <font style="1"/>
+                          <font size="22" style="1"/>
                           <foreground color="-16745729"/>
-                          <text value="Prediction Value: &lt;tbd&gt;"/>
+                          <horizontalAlignment value="0"/>
+                          <horizontalTextPosition value="0"/>
+                          <text value="Prediction: &lt;tbd&gt;"/>
                         </properties>
                       </component>
-                      <component id="788a8" class="javax.swing.JLabel" binding="predictionConfidenceLabel">
-                        <constraints>
-                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <font style="1"/>
-                          <foreground color="-16745729"/>
-                          <text value="Confidence: &lt;tbd&gt;"/>
-                        </properties>
-                      </component>
-                      <grid id="721a9" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                        <margin top="0" left="0" bottom="0" right="0"/>
-                        <constraints>
-                          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties/>
-                        <border type="none" title="Decision boundary"/>
-                        <children/>
-                      </grid>
                     </children>
                   </grid>
                 </children>
