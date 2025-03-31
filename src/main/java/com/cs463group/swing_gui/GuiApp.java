@@ -252,6 +252,26 @@ public class GuiApp extends JFrame {
                             "Training Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+
+                // check if data hs been loaded in network
+                if (!dataLoaded) {
+                    JOptionPane.showMessageDialog(mainPanel, "Data has not been loaded.",
+                            "Training Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // check if it's a mutation or gradient descent network
+                if (mutationTrain) {
+                    mutNeuralNetwork.mutationTrain(LoadedData, LoadedAnswers);
+                    JOptionPane.showMessageDialog(mainPanel, "Network has successfully undergone mutation training" +
+                                    " for " + numOfTrainingCycles + " training cycles.",
+                            "Training Notification", JOptionPane.INFORMATION_MESSAGE);
+                } else if (gradientDescentTrain) {
+                    difNeuralNetwork.train(LoadedData, LoadedAnswers);
+                    JOptionPane.showMessageDialog(mainPanel, "Network has successfully undergone gradient descent training" +
+                                    " for " + numOfTrainingCycles + " training cycles.",
+                            "Training Notification", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         });
 
