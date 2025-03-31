@@ -1,7 +1,7 @@
 package com.cs463group.swing_gui;
 
+import com.cs463group.neural_net.gradient_descent.cDifferentialNetwork;
 import com.cs463group.neural_net.utils.Logger;
-import com.cs463group.bridge.DataLoader;
 import com.cs463group.neural_net.mutation_training.Network;
 
 import javax.swing.*;
@@ -68,10 +68,8 @@ public class GuiApp extends JFrame {
     private JPanel NeuralNetworkVisualizerPanel;
     private JLabel predictionOutputLabel;
     private JLabel predictionConfidenceLabel;
-    private JSpinner spinner_inputDimensionality;
 
     // TRACK ALL VALUES OF FIELDS + DATA TO FEED INTO BACKEND
-    private Integer inputDimensionality = 0;
     private Integer numOfInputNodes = 0;
     private Integer numOfHiddenNodes = 0;
     private Integer numOfOutputNodes = 0;
@@ -79,7 +77,8 @@ public class GuiApp extends JFrame {
     private Double learningRate = 0.15;
 
     // ALLOCATE NEURAL NETWORK OBJECT
-    Network neuralNetwork;
+    Network mutNeuralNetwork;
+    cDifferentialNetwork difNeuralNetwork;
 
     private File previewData;
     private File loadedData;
@@ -88,6 +87,7 @@ public class GuiApp extends JFrame {
 
     private boolean mutationTrain = false;
     private boolean gradientDescentTrain = false;
+    private boolean neuralNetworkCreated = false;
 
     // Create Arraylist containing neuralNetVisualizer layer values
     List<Layer> neuralNetVisualizerLayers;
@@ -97,13 +97,7 @@ public class GuiApp extends JFrame {
 
     // Create listeners for all fields
     public GuiApp() {
-        spinner_inputDimensionality.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent changeEvent) {
-                inputDimensionality = (Integer) spinner_inputDimensionality.getValue();
-                Logger.log(Logger.LogLevel.DEBUG, "inputDimensionality: " + inputDimensionality, true, false);
-            }
-        });
+
         spinner_inputNodes.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent changeEvent) {
@@ -140,7 +134,7 @@ public class GuiApp extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
 
                 // confirmation dialog if neural network already exists
-                if(neuralNetwork != null) {
+                if(neuralNetworkCreated == true) {
                     int confirm = JOptionPane.showOptionDialog(
                             mainPanel, "Are you sure you'd like to create a new Neural Network? This will delete and replace the current network, undoing all training.",
                             "Creation Confirmation", JOptionPane.YES_NO_OPTION,
@@ -158,15 +152,6 @@ public class GuiApp extends JFrame {
                     // display appropriate error
                     JOptionPane.showMessageDialog(mainPanel, "Malformed Parameter." +
                                     "\nPlease select a training method.",
-                            "Creation Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                // check input dimensionality
-                if (inputDimensionality < 1) {
-                    // display appropriate error
-                    JOptionPane.showMessageDialog(mainPanel, "Malformed Parameter." +
-                                    "\nInput Dimensionality should be greater than 0. Please note that input dimensionality parameter is contingent on the data you feed the network.",
                             "Creation Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -196,7 +181,16 @@ public class GuiApp extends JFrame {
                 NeuralNetworkVisualizerPanel.updateUI();
 
                 // create neural network with aforementioned parameters
-                neuralNetwork = new Network(numOfTrainingCycles, learningRate, inputDimensionality, numOfInputNodes, numOfHiddenNodes, numOfOutputNodes);
+                // if mutation network, set # input nodes = to input nodes
+                if (gradientDescentTrain) {
+                    neuralNetworkCreated = true;
+                    mutNeuralNetwork = null;
+                    difNeuralNetwork = new cDifferentialNetwork(numOfInputNodes, numOfHiddenNodes, numOfOutputNodes, numOfTrainingCycles, learningRate);
+                } else if (mutationTrain) {
+                    neuralNetworkCreated = true;
+                    difNeuralNetwork = null;
+                    mutNeuralNetwork = new Network(numOfTrainingCycles, numOfInputNodes, numOfInputNodes, numOfHiddenNodes, numOfOutputNodes);
+                }
 
                 // logger stuff
                 String traintype = "";
@@ -209,7 +203,6 @@ public class GuiApp extends JFrame {
                 Logger.log(Logger.LogLevel.INFO, "Neural Network created! Stats listed below.", true, false);
                 Logger.log(Logger.LogLevel.INFO,
                         "   Training method           : " + traintype
-                        + "\n   Input Dimensionality      : " + inputDimensionality
                         + "\n   Number of input neurons   : " + numOfInputNodes
                         + "\n   Number of hidden neurons  : " + numOfHiddenNodes
                         + "\n   Number of output neurons  : " + numOfOutputNodes
@@ -218,17 +211,23 @@ public class GuiApp extends JFrame {
 
                 // WARNING CHECK
                 // check if low training cycle count
-                if (numOfTrainingCycles < 100) {
+                if ((mutationTrain) && (numOfTrainingCycles < 100)) {
                     // Warn user of low number of training cycles
-                    JOptionPane.showMessageDialog(mainPanel, "Low number of training cycles specified." +
-                                    "\nThis may result in severe under-performance depending on the dataset.",
+                    JOptionPane.showMessageDialog(mainPanel, "Low number of training cycles specified for mutation network." +
+                                    "\nThis may result in severe under-performance depending on the dataset. Recommended range for" +
+                                    " mutation network is 100 - 1000",
+                            "Creation Warning", JOptionPane.WARNING_MESSAGE);
+                } else if((!mutationTrain) && (numOfTrainingCycles > 100)) {
+                    // Warn user of low number of training cycles
+                    JOptionPane.showMessageDialog(mainPanel, "High number of training cycles specified for gradient descent network." +
+                                    "\nThis may result in severe over-fitting depending on the dataset. Recommended range for" +
+                                    " gradient descent network is 10 - 200",
                             "Creation Warning", JOptionPane.WARNING_MESSAGE);
                 } else {
                     // if no warning, notify user it created w/o warnings
                     JOptionPane.showMessageDialog(mainPanel, "Network Created Successfully without warnings!"
                                     + "\n\n--- ATTRIBUTES ---"
                                     + "\nTraining method: " + traintype
-                                    + "\nInput Dimensionality: " + inputDimensionality
                                     + "\nNumber of input neurons: " + numOfInputNodes
                                     + "\nNumber of hidden neurons: " + numOfHiddenNodes
                                     + "\nNumber of output neurons: " + numOfOutputNodes
@@ -247,7 +246,7 @@ public class GuiApp extends JFrame {
         TRAINButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if(neuralNetwork == null) {
+                if(neuralNetworkCreated == false) {
                     JOptionPane.showMessageDialog(mainPanel, "Neural Network does not exist.",
                             "Training Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -257,7 +256,7 @@ public class GuiApp extends JFrame {
         PREDICTButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if(neuralNetwork == null) {
+                if(neuralNetworkCreated == false) {
                     JOptionPane.showMessageDialog(mainPanel, "Neural Network does not exist.",
                             "Prediction Error", JOptionPane.ERROR_MESSAGE);
                 }
