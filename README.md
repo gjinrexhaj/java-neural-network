@@ -35,12 +35,19 @@ GitHub will serve as our primary platform for code.
 
 ---
 
-## Repository Structure
+## Source Structure
 ```
 java-neural-network/
-
-
+    com/cs463group/
+        bridge/
+        neural_net/
+        utils/
+        swing_gui/
 ```
+
+```bridge/``` contains all code that the frontend shares with the backend pertaining to data loading.
+Likewise, ```util/``` also contains shared code, namely the logger and commonly use mathematical functions.
+All other major subdirectories' names are implicative of their respective functions.
 
 ---
 
