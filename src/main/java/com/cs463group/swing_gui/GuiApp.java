@@ -25,16 +25,8 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
  *  Contains all frontend GUI code for neural network visualizer
  */
 
-// TODO: get rid of line 57 post-"maven build" bug
-
-// TODO: IMPLEMENT GRADIENT DESCENT SELECTION ONCE GRADIENT DESCENT BACKEND IS IMPLEMENTED AND/OR CONSOLIDATED
-// TODO: implement loading data into model
-// TODO: implement decision boundary graph
-// TODO: implement prediction
-// TODO: link frontend with backend neural network code
-
-// TODO: Integrate backend with frontend - creation of nn, loading of data, training nn, making a prediction
 // TODO: Implement loading data into dataLoader and seeing loaded data in data view panel
+// TODO: Implement prediction view
 // TODO: log all important interactions such that they show on console view
 
 public class GuiApp extends JFrame {
@@ -252,6 +244,7 @@ public class GuiApp extends JFrame {
                 }
             }
         });
+
         // TODO: implement PREDICT button, implement parameter checks, and link backend code
         PREDICTButton.addActionListener(new ActionListener() {
             @Override
@@ -270,6 +263,7 @@ public class GuiApp extends JFrame {
                 Logger.log(Logger.LogLevel.DEBUG, "mutationTrainEnabled", true, false);
             }
         });
+
         gradientDescentRadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -278,24 +272,28 @@ public class GuiApp extends JFrame {
                 Logger.log(Logger.LogLevel.DEBUG, "gradientDescentTrainEnabled", true, false);
             }
         });
+
         unloadDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
             }
         });
+
         loadDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
             }
         });
+
         fileTree.addTreeSelectionListener(new TreeSelectionListener() {
             @Override
             public void valueChanged(TreeSelectionEvent treeSelectionEvent) {
 
             }
         });
+
         analysisButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
