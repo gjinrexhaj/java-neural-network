@@ -26,9 +26,11 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
  *  Contains all frontend GUI code for neural network visualizer
  */
 
-// TODO: Implement loading data into dataLoader and seeing loaded data in data view panel
+// TODO: Implement training button
 // TODO: Implement prediction view
+// TODO: Implement prediction button
 // TODO: log all important interactions such that they show on console view
+// TODO: allow for toggling between debug mode log entries and release mode log entries
 
 public class GuiApp extends JFrame {
 
@@ -126,7 +128,7 @@ public class GuiApp extends JFrame {
             }
         });
 
-        // TODO: implement CREATE button, IMPLEMENT GRADIENT DESCENT METHOD SELECTION ONCE BACKEND IS AVAILABLE
+        // Create neural network with specified parameters
         CREATEButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -241,6 +243,7 @@ public class GuiApp extends JFrame {
         });
 
         // TODO: implement TRAIN button, implement parameter checks, and link backend code
+        // TODO: use fields LoadedData, and LoadedAnswers.
         TRAINButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -281,7 +284,6 @@ public class GuiApp extends JFrame {
             }
         });
 
-
         // clears textview and unloads data
         unloadDataButton.addActionListener(new ActionListener() {
             @Override
@@ -290,7 +292,7 @@ public class GuiApp extends JFrame {
                 dataLoaded = false;
                 loadedDataView.setText("");
 
-                // TODO: UNLOAD DATA FROM NEURAL NET
+                // Unload data from neural network
                 LoadedFile.clear();
                 LoadedData.clear();
                 LoadedAnswers.clear();
@@ -341,7 +343,7 @@ public class GuiApp extends JFrame {
                 loadedDataView.setEditable(false); // Make it read-only
 
 
-                // TODO: LOAD DATA INTO NEURAL NET
+                // Load data into neural net
                 dataLoaded = true;
 
                 LoadedFile = DataLoader.loadData(filePath);
