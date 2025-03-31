@@ -1,5 +1,6 @@
 package com.cs463group.swing_gui;
 
+import com.cs463group.bridge.DataLoader;
 import com.cs463group.neural_net.gradient_descent.cDifferentialNetwork;
 import com.cs463group.neural_net.utils.Logger;
 import com.cs463group.neural_net.mutation_training.Network;
@@ -9,10 +10,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.TreePath;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +46,6 @@ public class GuiApp extends JFrame {
     private JButton TRAINButton;
     private JButton PREDICTButton;
     private JButton analysisButton;
-    private JButton saveButton;
     private JButton aboutButton;
     private JProgressBar progressBar1;
     private JSpinner spinner_trainingCycles;
@@ -56,7 +56,7 @@ public class GuiApp extends JFrame {
     private JTextField textField_learnFactor;
     private JButton loadDataButton;
     private JButton unloadDataButton;
-    private JTextPane EXAMPLEWHATYOURDATATextPane;
+    private JTextPane loadedDataView;
     private JPanel NeuralNetworkVisualizerPanel;
     private JLabel predictionOutputLabel;
     private JLabel predictionConfidenceLabel;
@@ -66,20 +66,26 @@ public class GuiApp extends JFrame {
     private Integer numOfHiddenNodes = 0;
     private Integer numOfOutputNodes = 0;
     private Integer numOfTrainingCycles = 0;
-    private Double learningRate = 0.15;
+    private Double learningRate = 1.0;
 
     // ALLOCATE NEURAL NETWORK OBJECT
     Network mutNeuralNetwork;
     cDifferentialNetwork difNeuralNetwork;
 
-    private File previewData;
-    private File loadedData;
-    private List<List<Double>> inputData;
-    private List<List<Double>> expectedAnswers;
+    // Data to be loaded into network
+    List<List<Double>> LoadedFile = new ArrayList<>();
+    List<List<Double>> LoadedData = new ArrayList<>();
+    List<List<Double>> LoadedAnswers = new ArrayList<>();
+    private boolean dataLoaded = false;
+
+    static String osName;
+    static boolean isLinux;
 
     private boolean mutationTrain = false;
     private boolean gradientDescentTrain = false;
     private boolean neuralNetworkCreated = false;
+
+    private String filePath;
 
     // Create Arraylist containing neuralNetVisualizer layer values
     List<Layer> neuralNetVisualizerLayers;
@@ -241,6 +247,7 @@ public class GuiApp extends JFrame {
                 if(neuralNetworkCreated == false) {
                     JOptionPane.showMessageDialog(mainPanel, "Neural Network does not exist.",
                             "Training Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
             }
         });
@@ -252,6 +259,7 @@ public class GuiApp extends JFrame {
                 if(neuralNetworkCreated == false) {
                     JOptionPane.showMessageDialog(mainPanel, "Neural Network does not exist.",
                             "Prediction Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
             }
         });
@@ -273,24 +281,101 @@ public class GuiApp extends JFrame {
             }
         });
 
+
+        // clears textview and unloads data
         unloadDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                // clear textview
+                dataLoaded = false;
+                loadedDataView.setText("");
+
+                // TODO: UNLOAD DATA FROM NEURAL NET
+                LoadedFile.clear();
+                LoadedData.clear();
+                LoadedAnswers.clear();
 
             }
         });
 
+
+        // Displays data in textview and loads into data lists
         loadDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
+                if (!neuralNetworkCreated) {
+                    JOptionPane.showMessageDialog(mainPanel, "Neural Network does not exist.",
+                            "Loading Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // display data in textView
+                StringBuilder fileContents = new StringBuilder();
+                String line;
+
+                BufferedReader reader = null;
+                try {
+                    reader = new BufferedReader(new FileReader(filePath));
+                } catch (FileNotFoundException e) {
+                    JOptionPane.showMessageDialog(mainPanel, "Failed to load " + filePath + ". File doesn't exist or" +
+                                    " you're attempting to load a directory.",
+                            "Loading Error", JOptionPane.ERROR_MESSAGE);
+                    throw new RuntimeException(e);
+                }
+                while (true) {
+                    try {
+                        if ((line = reader.readLine()) == null) break;
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    fileContents.append(line).append("\n");
+                }
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                loadedDataView.setText(fileContents.toString());
+                loadedDataView.setEditable(false); // Make it read-only
+
+
+                // TODO: LOAD DATA INTO NEURAL NET
+                dataLoaded = true;
+
+                LoadedFile = DataLoader.loadData(filePath);
+                LoadedData = DataLoader.separateInputs(LoadedData, numOfInputNodes);
+                LoadedAnswers = DataLoader.seperateAnswers(LoadedData, numOfOutputNodes);
+
+                JOptionPane.showMessageDialog(mainPanel, filePath + " loaded successfully!\n"
+                        + "# Inputs: " + numOfInputNodes
+                        + "\n# Outputs: " + numOfOutputNodes,
+                        "Loading Notification", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
+        // Retrieve file path of selection in JTree
         fileTree.addTreeSelectionListener(new TreeSelectionListener() {
             @Override
             public void valueChanged(TreeSelectionEvent treeSelectionEvent) {
+                filePath = "";
 
+                TreePath treepath = treeSelectionEvent.getPath();
+                Object elements[] = treepath.getPath();
+                // i = 0 to include topmost-dir in path, i = 1 to exclude
+                for (int i = 1, n = elements.length; i < n; i++) {
+
+                    // "\\" for windows
+                    // "/" for linux
+                    if (isLinux) {
+                        filePath += elements[i] + "/";
+                    } else {
+                        filePath += elements[i] + "\\";
+                    }
+                }
+
+                Logger.log(Logger.LogLevel.DEBUG, "filePath = " + filePath, true, false);
             }
         });
 
@@ -331,8 +416,8 @@ public class GuiApp extends JFrame {
     public static void main(String[] args) {
 
         // set window decoration for linux, and window theming
-        String osName = System.getProperty("os.name").toLowerCase();
-        boolean isLinux = osName.startsWith("linux");
+        osName = System.getProperty("os.name").toLowerCase();
+        isLinux = osName.startsWith("linux");
 
         if (isLinux) {
             // enable custom window decorations

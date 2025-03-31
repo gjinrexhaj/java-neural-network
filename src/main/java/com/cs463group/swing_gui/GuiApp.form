@@ -144,7 +144,7 @@
                         <properties/>
                         <border type="none"/>
                         <children>
-                          <component id="9327e" class="javax.swing.JTextPane" binding="EXAMPLEWHATYOURDATATextPane" default-binding="true">
+                          <component id="9327e" class="javax.swing.JTextPane" binding="loadedDataView">
                             <constraints/>
                             <properties>
                               <font name="Source Code Pro"/>
