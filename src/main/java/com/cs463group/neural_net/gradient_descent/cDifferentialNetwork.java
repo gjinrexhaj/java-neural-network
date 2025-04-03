@@ -68,7 +68,7 @@ public class cDifferentialNetwork {
                 adjust(dlLoss, dlInputs);
             }
 
-            if (epoch % 10 == 0) {
+            if (epoch % 1 == 0) {
                 List<List<Double>> dlPredictionsList    = new ArrayList<>();
 
                 for(int i = 0; i<data.size(); i++) {
