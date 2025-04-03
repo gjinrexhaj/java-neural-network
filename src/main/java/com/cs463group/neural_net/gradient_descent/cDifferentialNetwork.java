@@ -32,7 +32,8 @@ public class cDifferentialNetwork {
         }
 
         Logger.log(Logger.LogLevel.INFO, "Differential neural network created with " + iInputLayerSize + " input neurons, " +
-                hiddenSize + " hidden neurons, and " + outputSize + " output neurons.", true, true);
+                hiddenSize + " hidden neurons, and " + outputSize + " output neurons. LearnRate: " + rateOfLearn + ", epochs: " +
+                numEpochs, true, true);
     }
 
     public List<Double> predict(List<Double> inputs) {
