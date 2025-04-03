@@ -52,7 +52,7 @@ public class cDifferentialNetwork {
     }
 
     public void train(List<List<Double>> data, List<List<Double>> answers) {
-        Logger.log(Logger.LogLevel.INFO, "Training started with " + iEpochs + " epochs.", true, true);
+        Logger.log(Logger.LogLevel.INFO, "Training started with " + iEpochs + " epochs.", true, false);
 
         for (int epoch = 0; epoch < iEpochs; epoch++) {
             for (int i = 0; i < data.size(); i++) {
