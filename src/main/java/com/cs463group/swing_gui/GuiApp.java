@@ -50,7 +50,6 @@ public class GuiApp extends JFrame {
     private JButton PREDICTButton;
     private JButton analysisButton;
     private JButton aboutButton;
-    private JProgressBar progressBar1;
     private JSpinner spinner_trainingCycles;
     private JTextArea consoleTextArea;
     private JButton CREATEButton;
@@ -62,6 +61,8 @@ public class GuiApp extends JFrame {
     private JTextPane loadedDataView;
     private JPanel NeuralNetworkVisualizerPanel;
     private JLabel predictionOutputLabel;
+    private JButton clearConsoleButton;
+    private JLabel netattrLabel;
 
     // TRACK ALL VALUES OF FIELDS + DATA TO FEED INTO BACKEND
     private Integer numOfInputNodes = 0;
@@ -92,6 +93,7 @@ public class GuiApp extends JFrame {
     private boolean neuralNetworkCreated = false;
 
     private String filePath;
+    static int counter = 0;
 
     // Create Arraylist containing neuralNetVisualizer layer values
     List<Layer> neuralNetVisualizerLayers;
@@ -218,6 +220,13 @@ public class GuiApp extends JFrame {
                         + "\n   Number of training cycles : " + numOfTrainingCycles
                         + "\n   Learning Rate             : " + learningRate, false, false);
 
+                counter++;
+                Color blue = new Color(0, 122, 255);
+                netattrLabel.setForeground(blue);
+                netattrLabel.setText("Neural Network [" + counter + "] | numInputs: " + numOfInputNodes + " |" +
+                        " numHidden " + numOfHiddenNodes + " | numOutputs: " + numOfOutputNodes + " | numEpochs: " +
+                        numOfTrainingCycles + " | learningRate: " + learningRate + " | trainType: " + traintype);
+
                 // WARNING CHECK
                 // check if low training cycle count
                 if ((mutationTrain) && (numOfTrainingCycles < 100)) {
@@ -304,6 +313,9 @@ public class GuiApp extends JFrame {
                 } else if (gradientDescentTrain) {
                     prediction = difNeuralNetwork.predict(PredictionInput);
                 }
+
+                if (debugMode)
+                    Logger.log(Logger.LogLevel.DEBUG, "Predicting! Input: " + PredictionInput + " | Prediction: " + prediction, false, true);
 
                 predictionOutputLabel.setText("Prediction: " + prediction);
             }
@@ -456,6 +468,17 @@ public class GuiApp extends JFrame {
                 if (debugMode)
                     Logger.log(Logger.LogLevel.DEBUG, "learningRate: " + learningRate, true, false);
 
+            }
+        });
+
+        // clear console view window
+        clearConsoleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (debugMode)
+                    Logger.log(Logger.LogLevel.DEBUG, "clearConsoleButton clicked", true, false);
+
+                consoleTextArea.setText("");
             }
         });
     }
