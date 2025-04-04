@@ -63,6 +63,7 @@ public class GuiApp extends JFrame {
     private JLabel predictionOutputLabel;
     private JButton clearConsoleButton;
     private JLabel netattrLabel;
+    private JLabel netTrainInfoLabel;
 
     // TRACK ALL VALUES OF FIELDS + DATA TO FEED INTO BACKEND
     private Integer numOfInputNodes = 0;
@@ -70,6 +71,8 @@ public class GuiApp extends JFrame {
     private Integer numOfOutputNodes = 0;
     private Integer numOfTrainingCycles = 0;
     private Double learningRate = 1.0;
+
+    int trainedEpochs = 0;
 
     // ALLOCATE NEURAL NETWORK OBJECT
     Network mutNeuralNetwork;
@@ -87,6 +90,7 @@ public class GuiApp extends JFrame {
 
     static String osName;
     static boolean isLinux;
+    Color blue = new Color(0, 122, 255);
 
     private boolean mutationTrain = false;
     private boolean gradientDescentTrain = false;
@@ -221,11 +225,13 @@ public class GuiApp extends JFrame {
                         + "\n   Learning Rate             : " + learningRate, false, false);
 
                 counter++;
-                Color blue = new Color(0, 122, 255);
                 netattrLabel.setForeground(blue);
                 netattrLabel.setText("Network #" + counter + " | numInputs: " + numOfInputNodes + " |" +
                         " numHidden " + numOfHiddenNodes + " | numOutputs: " + numOfOutputNodes + " | numEpochs: " +
                         numOfTrainingCycles + " | learningRate: " + learningRate + " | trainType: " + traintype);
+                netTrainInfoLabel.setForeground(Color.BLACK);
+                trainedEpochs = 0;
+                netTrainInfoLabel.setText("[Untrained]");
 
                 // WARNING CHECK
                 // check if low training cycle count
@@ -277,6 +283,10 @@ public class GuiApp extends JFrame {
                 }
 
                 // check if it's a mutation or gradient descent network
+                trainedEpochs += numOfTrainingCycles;
+                netTrainInfoLabel.setForeground(blue);
+                netTrainInfoLabel.setText("Trained with " + trainedEpochs + " epochs");
+
                 if (mutationTrain) {
                     mutNeuralNetwork.mutationTrain(LoadedData, LoadedAnswers);
                     JOptionPane.showMessageDialog(mainPanel, "Network has successfully undergone mutation training" +

@@ -502,6 +502,18 @@
               <text value="[Active network attributes will show up here once created]"/>
             </properties>
           </component>
+          <component id="33a2f" class="javax.swing.JToolBar$Separator">
+            <constraints/>
+            <properties>
+              <separatorSize width="30" height="10"/>
+            </properties>
+          </component>
+          <component id="5dfc" class="javax.swing.JLabel" binding="netTrainInfoLabel">
+            <constraints/>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
         </children>
       </toolbar>
     </children>
