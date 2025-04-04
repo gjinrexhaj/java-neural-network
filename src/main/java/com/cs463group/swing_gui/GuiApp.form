@@ -85,7 +85,6 @@
                           </grid>
                         </constraints>
                         <properties>
-                          <background color="-1"/>
                         </properties>
                         <clientProperties>
                           <JTree.lineStyle class="java.lang.String" value=""/>
@@ -226,7 +225,6 @@
                         </constraints>
                         <properties>
                           <font size="20" style="1"/>
-                          <foreground color="-16777216"/>
                           <text value="Textfield Input: [null]"/>
                         </properties>
                       </component>
@@ -274,7 +272,6 @@
                       <component id="7e818" class="javax.swing.JTextArea" binding="consoleTextArea" custom-create="true">
                         <constraints/>
                         <properties>
-                          <background color="-526086"/>
                           <editable value="false"/>
                           <enabled value="true"/>
                           <font name="Source Code Pro" size="14" style="0"/>
@@ -288,9 +285,7 @@
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <background color="-1"/>
                       <enabled value="true"/>
-                      <foreground color="-16777216"/>
                       <hideActionText value="false"/>
                       <horizontalAlignment value="0"/>
                       <text value="Clear Console"/>
@@ -492,7 +487,7 @@
           <component id="e7efe" class="javax.swing.JButton" binding="aboutButton" default-binding="true">
             <constraints/>
             <properties>
-              <background color="-1"/>
+              
               <text value="About"/>
             </properties>
           </component>
@@ -506,7 +501,6 @@
             <constraints/>
             <properties>
               <font/>
-              <foreground color="-16777216"/>
               <horizontalAlignment value="0"/>
               <horizontalTextPosition value="0"/>
               <text value="[Active network attributes will show up here once created]"/>

@@ -18,6 +18,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
 
@@ -521,6 +525,7 @@ public class GuiApp extends JFrame {
         // set custom theming
         Font customFont = new Font("Arial", Font.PLAIN, 14);
         FlatMacLightLaf.setup();
+        //FlatMacDarkLaf.setup();
         UIManager.put("defaultFont", customFont);
 
         // Prompt user if they'd like to use debug mode
