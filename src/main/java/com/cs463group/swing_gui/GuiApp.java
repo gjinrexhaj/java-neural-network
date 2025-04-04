@@ -27,11 +27,6 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
  *  Contains all frontend GUI code for neural network visualizer
  */
 
-// TODO: Implement training button
-// TODO: Implement prediction view
-// TODO: Implement prediction button
-// TODO: log all important interactions such that they show on console view
-// TODO: allow for toggling between debug mode log entries and release mode log entries
 
 public class GuiApp extends JFrame {
 
@@ -64,6 +59,7 @@ public class GuiApp extends JFrame {
     private JButton clearConsoleButton;
     private JLabel netattrLabel;
     private JLabel netTrainInfoLabel;
+    private JLabel predictionInputLabel;
 
     // TRACK ALL VALUES OF FIELDS + DATA TO FEED INTO BACKEND
     private Integer numOfInputNodes = 0;
@@ -449,6 +445,7 @@ public class GuiApp extends JFrame {
             }
         });
 
+
         aboutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -484,6 +481,12 @@ public class GuiApp extends JFrame {
                 consoleTextArea.setText("");
             }
         });
+        predictionInputTextField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                predictionInputLabel.setText("Textfield Input: [" + predictionInputTextField.getText().toString() + "]");
+            }
+        });
     }
 
     // Helper method to convert string list into double list
@@ -515,12 +518,10 @@ public class GuiApp extends JFrame {
             JDialog.setDefaultLookAndFeelDecorated(true);
         }
 
-
-
         // set custom theming
+        Font customFont = new Font("Arial", Font.PLAIN, 14);
         FlatMacLightLaf.setup();
-        Font newFont = new Font("Arial", Font.PLAIN, 14);
-        UIManager.put("defaultFont", newFont);
+        UIManager.put("defaultFont", customFont);
 
         // Prompt user if they'd like to use debug mode
         int debugConfirm = JOptionPane.showOptionDialog(
@@ -535,11 +536,8 @@ public class GuiApp extends JFrame {
             debugMode = false;
         }
 
-
-
         // set attributes
         JFrame frame = new JFrame("Neural Network GUI Frontend");
-
 
         frame.setContentPane(new GuiApp().mainPanel);
         frame.pack();
