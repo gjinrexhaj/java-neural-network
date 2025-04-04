@@ -479,19 +479,6 @@
         </clientProperties>
         <border type="none"/>
         <children>
-          <component id="b426a" class="javax.swing.JButton" binding="analysisButton" default-binding="true">
-            <constraints/>
-            <properties>
-              <background color="-1"/>
-              <text value="Analysis"/>
-            </properties>
-          </component>
-          <component id="278e3" class="javax.swing.JToolBar$Separator">
-            <constraints/>
-            <properties>
-              <separatorSize width="10" height="10"/>
-            </properties>
-          </component>
           <component id="e7efe" class="javax.swing.JButton" binding="aboutButton" default-binding="true">
             <constraints/>
             <properties>

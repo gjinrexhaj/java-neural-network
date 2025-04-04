@@ -439,13 +439,6 @@ public class GuiApp extends JFrame {
             }
         });
 
-        analysisButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-
-            }
-        });
-
         aboutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
