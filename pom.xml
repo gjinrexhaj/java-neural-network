@@ -38,6 +38,14 @@
   </build>
 
 
+  <repositories>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
+
+
   <dependencies>
     <!-- https://mvnrepository.com/artifact/com.formdev/flatlaf -->
     <dependency>
@@ -53,5 +61,12 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>com.github.Dansoftowner</groupId>
+      <artifactId>jSystemThemeDetector</artifactId>
+      <version>3.9</version>
+    </dependency>
+
   </dependencies>
 </project>
