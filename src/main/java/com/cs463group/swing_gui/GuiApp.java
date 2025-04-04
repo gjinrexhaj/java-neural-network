@@ -223,7 +223,7 @@ public class GuiApp extends JFrame {
                 counter++;
                 Color blue = new Color(0, 122, 255);
                 netattrLabel.setForeground(blue);
-                netattrLabel.setText("Neural Network [" + counter + "] | numInputs: " + numOfInputNodes + " |" +
+                netattrLabel.setText("Network #" + counter + " | numInputs: " + numOfInputNodes + " |" +
                         " numHidden " + numOfHiddenNodes + " | numOutputs: " + numOfOutputNodes + " | numEpochs: " +
                         numOfTrainingCycles + " | learningRate: " + learningRate + " | trainType: " + traintype);
 
