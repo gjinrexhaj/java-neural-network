@@ -29,12 +29,12 @@ public class ConsoleApp {
         int mut_numOutputNeurons = 1;
         double mut_learnRate = 0.5;
 
-        int dif_numEpochs = 175;
+        int dif_numEpochs = 100;
         int dif_numDataInputs = 2;
         int dif_numInputNeurons = 2;
         int dif_numHiddenNeurons = 2;
         int dif_numOutputNeurons = 1;
-        double dif_learnRate = 0.2;
+        double dif_learnRate = 0.1;
 
         Network testnet = new Network(mut_numEpochs, mut_learnRate, mut_numDataInputs, mut_numInputNeurons, mut_numHiddenNeurons, mut_numOutputNeurons);
         cDifferentialNetwork mm_testNetDIFF = new cDifferentialNetwork(dif_numInputNeurons, dif_numHiddenNeurons, dif_numOutputNeurons, dif_numEpochs, dif_learnRate);
@@ -71,6 +71,7 @@ public class ConsoleApp {
         mm_testNetDIFF.train(mm_nrm_data, mm_nrm_answers);
         zs_testNetDIFF.train(zs_nrm_data, zs_nrm_answers);
 
+
         // manually load inputs for prediction - must be normalized if using GD, else use raw
         List<Double> raw_input1 = List.of(167.0, 73.0);
         List<Double> raw_input2 = List.of(105.0, 67.0);
@@ -104,6 +105,7 @@ public class ConsoleApp {
         System.out.println(raw_input4 + " | Expected output: 0 | Actual output: " + testnet.predict(raw_input4));
         System.out.println(raw_input5 + " | Expected output: 0 | Actual output: " + testnet.predict(raw_input5));
 
+
         System.out.println(" ---- DIFFERENTIAL NETWORK RESULTS ( MIN-MAX NORMALIZED) ---- ");
         System.out.println(dif_netAtr);
         System.out.println(raw_input1 + " | Expected output: 0 | Actual output: " + mm_testNetDIFF.predict(mm_nrm_input1));
@@ -119,6 +121,7 @@ public class ConsoleApp {
         System.out.println(raw_input3 + " | Expected output: 1 | Actual output: " + zs_testNetDIFF.predict(zs_nrm_input3));
         System.out.println(raw_input4 + " | Expected output: 0 | Actual output: " + zs_testNetDIFF.predict(zs_nrm_input4));
         System.out.println(raw_input5 + " | Expected output: 0 | Actual output: " + zs_testNetDIFF.predict(zs_nrm_input5));
+
 
         Logger.closeLogger();
     }
