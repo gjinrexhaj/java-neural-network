@@ -24,6 +24,7 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import com.formdev.flatlaf.ui.FlatUIUtils;
 import com.jthemedetecor.OsThemeDetector;
 
 
@@ -527,10 +528,17 @@ public class GuiApp extends JFrame {
         // set custom theming
         Font customFont = new Font("Arial", Font.PLAIN, 14);
 
-        FlatMacLightLaf.setup();
+
+
+        // Initially set color
+        final OsThemeDetector detector = OsThemeDetector.getDetector();
+        if (detector.isDark()) {
+            FlatMacDarkLaf.setup();
+        } else {
+            FlatMacLightLaf.setup();
+        }
 
         // Dynamically switch color
-        final OsThemeDetector detector = OsThemeDetector.getDetector();
         detector.registerListener(isDark -> {
             SwingUtilities.invokeLater(() -> {
                 if (isDark) {
