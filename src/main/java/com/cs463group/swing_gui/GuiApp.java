@@ -20,9 +20,11 @@ import java.util.List;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import com.jthemedetecor.OsThemeDetector;
 
 
 /**
@@ -524,8 +526,30 @@ public class GuiApp extends JFrame {
 
         // set custom theming
         Font customFont = new Font("Arial", Font.PLAIN, 14);
+
         FlatMacLightLaf.setup();
-        //FlatMacDarkLaf.setup();
+
+        // Dynamically switch color
+        final OsThemeDetector detector = OsThemeDetector.getDetector();
+        detector.registerListener(isDark -> {
+            SwingUtilities.invokeLater(() -> {
+                if (isDark) {
+                    // The OS switched to a dark theme
+                    if (debugMode)
+                        Logger.log(Logger.LogLevel.DEBUG, "OS Dark mode enabled, isDark: " + isDark, true, false);
+                    FlatMacDarkLaf.setup();
+                    FlatLaf.updateUI();
+                } else {
+                    // The OS switched to a light theme
+                    if (debugMode)
+                        Logger.log(Logger.LogLevel.DEBUG, "OS Light mode enabled, isDark: " + isDark, true, false);
+                    FlatMacLightLaf.setup();
+                    FlatLaf.updateUI();
+                }
+            });
+        });
+
+
         UIManager.put("defaultFont", customFont);
 
         // Prompt user if they'd like to use debug mode
