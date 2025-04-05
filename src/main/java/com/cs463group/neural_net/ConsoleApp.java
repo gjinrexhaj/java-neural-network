@@ -53,15 +53,15 @@ public class ConsoleApp {
         List<List<Double>> zs_nrm_data = new ArrayList<>();
         List<List<Double>> zs_nrm_answers = new ArrayList<>();
 
-        raw_loadedFile = DataLoader.loadData("test-data/weight-height-gender/4-entries/Source-data.csv");
+        raw_loadedFile = DataLoader.loadData("test-data/weight-height-gender/4-entries/source-data.csv");
         raw_data = DataLoader.separateInputs(raw_loadedFile, mut_numDataInputs);
         raw_answers = DataLoader.seperateAnswers(raw_loadedFile, mut_numOutputNeurons);
 
-        mm_nrm_loadedFile = DataLoader.loadData("test-data/weight-height-gender/4-entries/MinMax-normalized.csv");
+        mm_nrm_loadedFile = DataLoader.loadData("test-data/weight-height-gender/4-entries/minmax-normalized.csv");
         mm_nrm_data = DataLoader.separateInputs(mm_nrm_loadedFile, dif_numDataInputs);
         mm_nrm_answers = DataLoader.seperateAnswers(mm_nrm_loadedFile, dif_numOutputNeurons);
 
-        zs_nrm_loadedFile = DataLoader.loadData("test-data/weight-height-gender/4-entries/ZScore-normalized.csv");
+        zs_nrm_loadedFile = DataLoader.loadData("test-data/weight-height-gender/4-entries/zscore-normalized.csv");
         zs_nrm_data = DataLoader.separateInputs(zs_nrm_loadedFile, dif_numDataInputs);
         zs_nrm_answers = DataLoader.seperateAnswers(zs_nrm_loadedFile, dif_numOutputNeurons);
 

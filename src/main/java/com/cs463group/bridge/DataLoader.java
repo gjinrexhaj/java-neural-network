@@ -26,7 +26,7 @@ public class DataLoader {
         int numOfOutputNeurons = 2;
 
         List<List<Double>> Records = new ArrayList<>();
-        //Records = loadData("test-data/weight-height-gender/4-entries/Source-data.csv");
+        //Records = loadData("test-data/weight-height-gender/4-entries/source-data.csv");
         Records = loadData("src/main/java/com/cs463group/bridge/DataLoaderTest.csv");
 
         System.out.println();
