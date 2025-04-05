@@ -84,8 +84,7 @@
                             <preferred-size width="150" height="50"/>
                           </grid>
                         </constraints>
-                        <properties>
-                        </properties>
+                        <properties/>
                         <clientProperties>
                           <JTree.lineStyle class="java.lang.String" value=""/>
                         </clientProperties>
@@ -146,6 +145,7 @@
                           <component id="9327e" class="javax.swing.JTextPane" binding="loadedDataView">
                             <constraints/>
                             <properties>
+                              <editable value="false"/>
                               <font name="Source Code Pro"/>
                               <text value="EXAMPLE - WHAT YOUR DATA SHOULD LOOK LIKE (for InputDimensionality = 2 and NumOutputNeurons = 1 in this case):&#10;&#10;INPUT 1        INPUT 2        ANSWER&#10;Height (cm), Weight (kg), Gender (0-male, 1-female)&#10;&#10;-----------------example data begin-----------------&#10;height,weight,gender&#10;172, 66, 0&#10;182, 76, 0&#10;176, 57, 1&#10;etc 1&#10;etc 2&#10;etc ...&#10;etc n&#10;------------------example data end------------------&#10;&#10;LOAD DATA BY SELECTING A .csv FILE VIA FILE TREE&#10;ON THE LEFT, AND CLICKING &quot;Load Data&quot;&#10;"/>
                             </properties>
@@ -487,7 +487,6 @@
           <component id="e7efe" class="javax.swing.JButton" binding="aboutButton" default-binding="true">
             <constraints/>
             <properties>
-              
               <text value="About"/>
             </properties>
           </component>
