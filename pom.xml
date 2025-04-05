@@ -2,6 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+
   <groupId>com.cs463group</groupId>
   <artifactId>java-neural-network</artifactId>
   <version>1.0-SNAPSHOT</version>
@@ -20,20 +21,51 @@
   <build>
     <finalName>${project.artifactId}</finalName>
     <plugins>
+
+      <!-- Build dependencies to be used in application -->
       <plugin>
-        <!-- Build executable JAR -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>target/lib</outputDirectory>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>false</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- use javac2 compile form into bytecode -->
+      <!-- TODO: due to plugin bugs, there's no way to automate building the prog -->
+      <!-- TODO: successfully, so we must tweak the form designer to generate sources -->
+      <!-- TODO: as source code, then we can invoke maven and it'll build the program -->
+      <!-- DETAILS CAN BE FOUND HERE: https://stackoverflow.com/questions/32135018/lambda-expressions-and-java-1-8-in-ideauidesigner -->
+
+
+      <!-- Build executable JAR -->
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.4.1</version>
         <configuration>
           <archive>
             <manifest>
+              <addClasspath>true</addClasspath>
               <classpathPrefix>lib</classpathPrefix>
-              <mainClass>com.cs463group.neural_net.ConsoleApp</mainClass>
+              <mainClass>com.cs463group.swing_gui.GuiApp</mainClass>
             </manifest>
           </archive>
         </configuration>
       </plugin>
+
     </plugins>
   </build>
 
@@ -46,6 +78,18 @@
   </repositories>
 
 
+  <pluginRepositories>
+    <pluginRepository>
+      <id>intellij-repository</id>
+      <url>https://www.jetbrains.com/intellij-repository/releases</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>intellij-third-party</id>
+      <url>https://cache-redirector.jetbrains.com/intellij-dependencies</url>
+    </pluginRepository>
+  </pluginRepositories>
+
+
   <dependencies>
     <!-- https://mvnrepository.com/artifact/com.formdev/flatlaf -->
     <dependency>
@@ -53,7 +97,6 @@
       <artifactId>flatlaf</artifactId>
       <version>3.5.4</version>
     </dependency>
-
 
     <dependency>
       <groupId>junit</groupId>
@@ -66,7 +109,17 @@
       <groupId>com.github.Dansoftowner</groupId>
       <artifactId>jSystemThemeDetector</artifactId>
       <version>3.9</version>
+      <scope>compile</scope>
     </dependency>
+
+
+    <dependency>
+      <groupId>com.intellij</groupId>
+      <artifactId>forms_rt</artifactId>
+      <version>7.0.3</version>
+    </dependency>
+
+
 
   </dependencies>
 </project>
