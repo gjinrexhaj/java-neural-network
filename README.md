@@ -6,7 +6,7 @@
 This is a collaborative effort to build an open-source neural network engine 
 and frontend GUI. As of right now, it's being implemented in pure Java.
 
-<img src="readme-docs/user-interface.png" alt="User Interface" width="800"/>
+<img src="readme-docs/ui-updated.png" alt="User Interface" width="800"/>
 
 GitHub will serve as our primary platform for code.
 
