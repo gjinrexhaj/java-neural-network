@@ -564,18 +564,6 @@ public class GuiApp extends JFrame {
 
         UIManager.put("defaultFont", customFont);
 
-        // Prompt user if they'd like to use debug mode
-        int debugConfirm = JOptionPane.showOptionDialog(
-                null, "Would you like to launch the program in debug mode?" +
-                        " Debug mode will create more verbose console logs and files.",
-                "Startup Mode Prompt", JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE, null, null, null);
-        if (debugConfirm == 0) {
-            debugMode = true;
-            Logger.log(Logger.LogLevel.DEBUG, "ENTERING DEBUG MODE", true, false);
-        } else {
-            debugMode = false;
-        }
 
         // set attributes
         JFrame frame = new JFrame("Neural Network GUI Frontend");
@@ -611,6 +599,19 @@ public class GuiApp extends JFrame {
         frame.setLocationRelativeTo(null);
 
         // add working dir string to bottom of data view
+        // Prompt user if they'd like to use debug mode
+        int debugConfirm = JOptionPane.showOptionDialog(
+                null, "Would you like to launch the program in debug mode?" +
+                        " Debug mode will create more verbose console logs and files.",
+                "Startup Mode Prompt", JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, null, null);
+        if (debugConfirm == 0) {
+            debugMode = true;
+            Logger.log(Logger.LogLevel.DEBUG, "ENTERING DEBUG MODE", true, false);
+        } else {
+            debugMode = false;
+        }
+
         Logger.log(Logger.LogLevel.INFO, "GUI application fully initialized.", true, false);
 
     }
