@@ -77,7 +77,7 @@ public class cDifferentialNetwork {
                 }
 
                 double loss = Functions.meanSquareLoss(Functions.convertToArray(answers), Functions.convertToArray(dlPredictionsList));
-                Logger.log(Logger.LogLevel.INFO, "Epoch " + epoch + " Loss: " + loss, false, true);
+                Logger.log(Logger.LogLevel.INFO, "Epoch " + epoch + " Loss: " + loss, false, false);
             }
         }
         Logger.log(Logger.LogLevel.INFO, "Training completed.", true, true);
