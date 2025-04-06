@@ -80,7 +80,7 @@ public class cDifferentialNetwork {
                 Logger.log(Logger.LogLevel.INFO, "Epoch " + epoch + " Loss: " + loss, false, false);
             }
         }
-        Logger.log(Logger.LogLevel.INFO, "Training completed.", true, true);
+        Logger.log(Logger.LogLevel.INFO, "Training completed.", true, false);
     }
 
     private void adjust(List<Double> outputLoss, List<Double> inputs) {
