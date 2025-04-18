@@ -17,14 +17,13 @@
  */
 
 
-package com.cs463group.neural_net;
+package com.cs462group.neural_net;
 
-import com.cs463group.neural_net.gradient_descent.cDifferentialNetwork;
-import com.cs463group.neural_net.mutation_training.Network;
-import com.cs463group.neural_net.utils.Logger;
-import com.cs463group.bridge.DataLoader;
+import com.cs462group.neural_net.gradient_descent.cDifferentialNetwork;
+import com.cs462group.neural_net.mutation_training.Network;
+import com.cs462group.neural_net.utils.Logger;
+import com.cs462group.bridge.DataLoader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 

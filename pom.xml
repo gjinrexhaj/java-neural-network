@@ -60,7 +60,7 @@
             <manifest>
               <addClasspath>true</addClasspath>
               <classpathPrefix>lib</classpathPrefix>
-              <mainClass>com.cs463group.swing_gui.GuiApp</mainClass>
+              <mainClass>com.cs462group.swing_gui.GuiApp</mainClass>
             </manifest>
           </archive>
         </configuration>

@@ -1,9 +1,9 @@
-package com.cs463group.swing_gui;
+package com.cs462group.swing_gui;
 
-import com.cs463group.bridge.DataLoader;
-import com.cs463group.neural_net.gradient_descent.cDifferentialNetwork;
-import com.cs463group.neural_net.utils.Logger;
-import com.cs463group.neural_net.mutation_training.Network;
+import com.cs462group.bridge.DataLoader;
+import com.cs462group.neural_net.gradient_descent.cDifferentialNetwork;
+import com.cs462group.neural_net.utils.Logger;
+import com.cs462group.neural_net.mutation_training.Network;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

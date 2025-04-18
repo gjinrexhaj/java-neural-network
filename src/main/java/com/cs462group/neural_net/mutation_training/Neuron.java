@@ -16,9 +16,9 @@
  *     GNU General Public License for more details.
  */
 
-package com.cs463group.neural_net.mutation_training;
+package com.cs462group.neural_net.mutation_training;
 
-import com.cs463group.neural_net.utils.Functions;
+import com.cs462group.neural_net.utils.Functions;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

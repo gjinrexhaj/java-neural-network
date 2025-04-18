@@ -18,7 +18,7 @@
  */
 
 
-package com.cs463group.bridge;
+package com.cs462group.bridge;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
