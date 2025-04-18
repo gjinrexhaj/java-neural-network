@@ -1,10 +1,21 @@
+/**
+ *  DifferentialNetwork.java
+ *
+ *  Contains an implementation of a static neural network
+ *  that uses Gradient Descent training
+ *
+ *  Created by Colm Duffin
+ *
+ */
+
+
 package com.cs463group.neural_net.gradient_descent;
 
 import com.cs463group.neural_net.utils.Functions;
 import com.cs463group.neural_net.utils.Logger;
-
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 public class DifferentialNetwork {
 

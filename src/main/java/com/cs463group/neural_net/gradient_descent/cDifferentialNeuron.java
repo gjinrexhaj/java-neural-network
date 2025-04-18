@@ -1,10 +1,21 @@
+/**
+ *  cDifferentialNeuron.java
+ *
+ *  Contains an implementation of a neuron suitable for
+ *  Gradient Descent training
+ *
+ *  Created by Colm Duffin
+ *
+ */
+
+
 package com.cs463group.neural_net.gradient_descent;
 
 import com.cs463group.neural_net.utils.Functions;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 
 public class cDifferentialNeuron {
     private     List<Double>        dlWeights;

@@ -1,20 +1,32 @@
-package com.cs463group.neural_net;
+/**
+ *  ConsoleApp.java
+ *  Created on 2/10/2025
+ *  Launching point of the program. Commandline variant
+ *
+ *  Copyright (C) 2025  Gjin Rexhaj
+ *
+ *     This program is free software; you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation; either version 2 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ */
 
+
+package com.cs463group.neural_net;
 
 import com.cs463group.neural_net.gradient_descent.cDifferentialNetwork;
 import com.cs463group.neural_net.mutation_training.Network;
 import com.cs463group.neural_net.utils.Logger;
 import com.cs463group.bridge.DataLoader;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- *  App.java
- *  Created on 2/10/2025
- *  Launching point of the program. Commandline variant
- */
 
 public class ConsoleApp {
 
