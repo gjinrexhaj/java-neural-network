@@ -1,6 +1,24 @@
-package com.cs463group.bridge;
+/**
+ *  DataLoader.java
+ *  Created on 3/11/2025
+ *  Defines an adaptive and flexible data loader, which reads and formats data from
+ *  a csv file such that the backend can interact with it.
+ *
+ *  Copyright (C) 2025  Gjin Rexhaj
+ *
+ *     This program is free software; you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation; either version 2 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ */
 
-// TODO: rigorously test DataLoader
+
+package com.cs463group.bridge;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,12 +27,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- *  DataLoader.java
- *  Created on 3/11/2025
- *  Defines an adaptive and flexible data loader, which reads and formats data from
- *  a csv file such that the backend can interact with it.
- */
 
 public class DataLoader {
 

@@ -1,9 +1,21 @@
+/**
+ *  cDifferentialNetwork.java
+ *
+ *  Contains an implementation of a parametrized neural network
+ *  that uses Gradient Descent training
+ *
+ *  Created by Colm Duffin
+ *
+ */
+
+
 package com.cs463group.neural_net.gradient_descent;
 
 import com.cs463group.neural_net.utils.Functions;
 import com.cs463group.neural_net.utils.Logger;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class cDifferentialNetwork {
     private     double                      dLearnRate;
