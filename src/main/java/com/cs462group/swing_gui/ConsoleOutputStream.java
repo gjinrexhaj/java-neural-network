@@ -1,4 +1,4 @@
-package com.cs463group.swing_gui;
+package com.cs462group.swing_gui;
 
 import javax.swing.*;
 import java.io.IOException;

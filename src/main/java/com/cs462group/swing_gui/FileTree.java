@@ -1,6 +1,5 @@
-package com.cs463group.swing_gui;
+package com.cs462group.swing_gui;
 
-import com.cs463group.neural_net.utils.Logger;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;

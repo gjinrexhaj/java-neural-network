@@ -1,6 +1,6 @@
-package com.cs463group.neural_net.gradient_descent;
+package com.cs462group.neural_net.gradient_descent;
 
-import com.cs463group.neural_net.utils.Functions;
+import com.cs462group.neural_net.utils.Functions;
 
 import java.util.Random;
 

@@ -1,4 +1,4 @@
-package com.cs463group.bridge;
+package com.cs462group.bridge;
 
 // TODO: rigorously test DataLoader
 

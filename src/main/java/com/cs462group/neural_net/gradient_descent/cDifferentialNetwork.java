@@ -1,7 +1,7 @@
-package com.cs463group.neural_net.gradient_descent;
+package com.cs462group.neural_net.gradient_descent;
 
-import com.cs463group.neural_net.utils.Functions;
-import com.cs463group.neural_net.utils.Logger;
+import com.cs462group.neural_net.utils.Functions;
+import com.cs462group.neural_net.utils.Logger;
 import java.util.ArrayList;
 import java.util.List;
 

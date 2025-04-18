@@ -1,4 +1,4 @@
-package com.cs463group.neural_net.utils;
+package com.cs462group.neural_net.utils;
 
 import java.io.FileWriter;
 import java.io.IOException;

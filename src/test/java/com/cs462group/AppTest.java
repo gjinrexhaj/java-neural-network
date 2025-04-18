@@ -1,4 +1,4 @@
-package com.cs463group;
+package com.cs462group;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
