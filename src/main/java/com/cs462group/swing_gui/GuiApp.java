@@ -96,6 +96,7 @@ public class GuiApp extends JFrame {
 
     static String osName;
     static boolean isLinux;
+    static boolean isMac;
     Color blue = new Color(0, 122, 255);
 
     private boolean mutationTrain = false;
@@ -441,8 +442,8 @@ public class GuiApp extends JFrame {
                 for (int i = 1, n = elements.length; i < n; i++) {
 
                     // "\\" for windows
-                    // "/" for linux
-                    if (isLinux) {
+                    // "/" for linux and mac
+                    if (isLinux || isMac) {
                         filePath += elements[i] + "/";
                     } else {
                         filePath += elements[i] + "\\";
@@ -519,6 +520,7 @@ public class GuiApp extends JFrame {
         // set window decoration for linux, and window theming
         osName = System.getProperty("os.name").toLowerCase();
         isLinux = osName.startsWith("linux");
+        isMac = osName.startsWith("mac");
 
         if (isLinux) {
             // enable custom window decorations
